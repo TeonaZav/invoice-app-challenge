@@ -1,68 +1,60 @@
 import styled from "styled-components";
+import { currencyFormat } from "../utils/helpers";
+import OvalOrange from "../assets/oval-orange.svg";
+import OvalGreen from "../assets/oval-green.svg";
+import OvalDraft from "../assets/oval-draft.svg";
 
-const ITEM = [
-  {
-    id: "RT3080",
-    createdAt: "2021-08-18",
-    paymentDue: "2021-08-19",
-    description: "Re-branding",
-    paymentTerms: 1,
-    clientName: "Jensen Huang",
-    clientEmail: "jensenh@mail.com",
-    status: "paid",
-    senderAddress: {
-      street: "19 Union Terrace",
-      city: "London",
-      postCode: "E1 3EZ",
-      country: "United Kingdom",
-    },
-    clientAddress: {
-      street: "106 Kendell Street",
-      city: "Sharrington",
-      postCode: "NR24 5WQ",
-      country: "United Kingdom",
-    },
-    items: [
-      {
-        name: "Brand Guidelines",
-        quantity: 1,
-        price: 1800.9,
-        total: 1800.9,
-      },
-    ],
-    total: 1800.9,
-  },
-];
+interface InvoiceListItemProps {
+  id: string;
+  clientName: string;
+  paymentDue: string;
+  total: number;
+  status: string;
+}
 
-function InvoiceListItem() {
-  const { id, clientName, paymentDue, total, status } = ITEM[0];
+function InvoiceListItem({
+  id,
+  clientName,
+  paymentDue,
+  total,
+  status,
+}: InvoiceListItemProps) {
   return (
     <StyledListItem>
-      <div className="flex-ct">
+      <div className="flex-ct-1">
         <p className="bold">
           <span className="pale">#</span>
           {id}
         </p>
-        <p className="pale">{clientName}</p>
+        <p className="pale">{paymentDue}</p>
       </div>
-      <div className="flex-ct">
-        <div>
-          <p className="pale">{paymentDue}</p>
-          <p className="bold">{total}</p>
-        </div>
-        <div className="status paid">
-          <p>{status}</p>
-        </div>
+      <p className="name pale">{clientName}</p>
+
+      <p className="total bold">{currencyFormat(total)}</p>
+
+      <div className={`status ${status}`}>
+        <img
+          src={
+            status === "paid"
+              ? `${OvalGreen}`
+              : status === "pending"
+              ? `${OvalOrange}`
+              : `${OvalDraft}`
+          }
+          alt=""
+        />
+        <p>{status}</p>
       </div>
     </StyledListItem>
   );
 }
 export default InvoiceListItem;
 
-const StyledListItem = styled.div`
+const StyledListItem = styled.li`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: flex-start;
   background-color: #ffffff;
   width: 32.7rem;
   height: 13.4rem;
@@ -88,6 +80,7 @@ const StyledListItem = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
     &.paid {
       color: var(--color-green);
       background-color: var(--pale-green);
@@ -96,10 +89,47 @@ const StyledListItem = styled.div`
       color: var(--color-orange);
       background-color: var(--pale-orange);
     }
+    &.draft {
+      color: var(--dark-blue-color);
+      background-color: var(--main-bg-color);
+    }
   }
-  .flex-ct {
+  .name {
+    width: 50%;
+    text-align: end;
+  }
+  .total {
+    align-self: flex-end;
+  }
+  .flex-ct-1 {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    width: 50%;
+  }
+
+  @media (min-width: 48em) {
+    width: 67.2rem;
+    height: 7.2rem;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    .flex-ct-1 {
+      flex-direction: row;
+      width: 30%;
+      gap: 2.9rem;
+    }
+    .name {
+      width: auto;
+      text-align: end;
+    }
+    .status {
+      align-self: center;
+      text-align: end;
+    }
+  }
+  @media (min-width: 90em) {
+    width: 73rem;
+    .flex-ct-1 {
+      gap: 4.4rem;
+    }
   }
 `;

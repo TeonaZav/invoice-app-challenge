@@ -33,6 +33,8 @@ input:-webkit-autofill:active {
   --blue-black-color2: #141625;
   --dark-blue-color: #1e2139;
   --dark-blue-pale: #252945;
+  --header-bg-color: #373B53;
+  --header-border-color: #494E6E;
   --red-color: #ec5757;
   --red-pale: #ff9797;
   --blue-grey-color1: #888eb0;
@@ -71,39 +73,27 @@ body {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.116);
   background-color: white;
 }
-
-.App {
-  width: 100vw;
-  margin: 0 auto;
-  align-self: center;
+main{  
+margin: 0 auto;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 3.6rem 2.4rem 10.5rem 2.4rem;
 }
-.btn,
-.btn:link,
-.btn:visited {
-  display: inline-block;
-  font-size: 1.3rem;
-  line-height: 1.8rem;
+
+
+.btn {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
   font-weight: 700;
-  padding: 1.5rem 3rem;
-  border-radius: 0.3rem;
-  letter-spacing: 0.1rem;
-  text-decoration: none;
   border: none;
   cursor: pointer;
   font-family: inherit;
   transition: all 0.3s;
-  text-transform: uppercase;
-}
-.btn--full:link,
-.btn--full:visited {
-  background-color: #d87d4a;
+  border-radius: 2.4rem;
   color: #fff;
 }
-.btn--full:hover,
-.btn--full:active {
-  background-color: #fbaf85;
-  color: #fff;
-}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -122,32 +112,9 @@ body {
   visibility: hidden;
   opacity: 0;
 }
-h2 {
-  font-weight: 700;
-  font-size: 2.8rem;
-  line-height: 3.8rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-p {
-  font-weight: 500;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-.flex-c-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3.2rem;
-}
+
 @media (min-width: 90em) {
-  .flex-c-center {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    width: 100vw;
-    gap: 3rem;
-  }
+
 }
 `;
 export default GlobalStyles;
