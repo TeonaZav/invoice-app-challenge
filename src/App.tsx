@@ -1,12 +1,14 @@
 import InvoiceList from "./components/InvoiceList";
 import GlobalStyles from "./styles/GlobalStyles";
+import Header from "./components/UI/Header";
 function App() {
   return (
     <>
       <GlobalStyles />
-      <div>
+      <Header />
+      <main>
         <InvoiceList />
-      </div>
+      </main>
     </>
   );
 }
