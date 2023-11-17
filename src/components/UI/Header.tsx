@@ -3,14 +3,16 @@ import LogoBg from "../../assets/logo-bg.svg";
 import Avatar from "../../assets/image-avatar.jpg";
 function Header() {
   return (
-    <StyledHeader>
-      <div>
-        <img src={LogoBg} alt="" />
-      </div>
-      <div className="avatar-wrap">
-        <img src={Avatar} alt="avatar" />
-      </div>
-    </StyledHeader>
+    <>
+      <StyledHeader>
+        <div>
+          <img src={LogoBg} alt="" />
+        </div>
+        <div className="avatar-wrap">
+          <img src={Avatar} alt="avatar" />
+        </div>
+      </StyledHeader>
+    </>
   );
 }
 export default Header;
@@ -36,10 +38,20 @@ const StyledHeader = styled.header`
     border-left: 1px solid var(--header-border-color);
   }
   @media (min-width: 48em) {
-    .avatar-wrap {
-      width: 9.6rem;
-    }
   }
   @media (min-width: 90em) {
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    width: 10.3rem;
+    .avatar-wrap {
+      width: 100%;
+      height: 9.6rem;
+      & img {
+        width: 4rem;
+        height: 4rem;
+      }
+      border-top: 1px solid var(--header-border-color);
+    }
   }
 `;

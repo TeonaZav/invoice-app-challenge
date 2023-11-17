@@ -40,6 +40,8 @@ input:-webkit-autofill:active {
   --blue-grey-color1: #888eb0;
   --blue-grey-color2: #7e88c3;
   --light-blue-color: #dfe3fa;
+  --light-blue-color2: #F9FAFE;
+  
   --color-orange: #FF8F00;
   --pale-orange: rgba(231, 198, 154, 0.200);
   --color-green: #33D69F;
@@ -49,11 +51,7 @@ body {
   margin: 0 auto;
   min-height: 100vh;
   max-width: 100vw;
-  font-family: "Manrope", sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f8f8f8;
+  font-family: 'League Spartan', sans-serif;
   overflow-x: hidden !important;
   scroll-behavior: smooth;
   transition: background-color 0.5s ease;
@@ -73,45 +71,24 @@ body {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.116);
   background-color: white;
 }
-main{  
-margin: 0 auto;
-display: flex;
-justify-content: center;
-align-items: center;
-padding: 3.6rem 2.4rem 10.5rem 2.4rem;
-}
 
 
-.btn {
-  font-size: 1.5rem;
-  line-height: 1.5rem;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  transition: all 0.3s;
-  border-radius: 2.4rem;
-  color: #fff;
-}
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(4px);
-  z-index: 100;
-  transition: all 0.5s;
-}
-.full {
-  z-index: 5000;
-}
-.hidden {
-  visibility: hidden;
-  opacity: 0;
-}
+.pale {
+    color: var(--blue-grey-color1);
+    font-weight: 500;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+  }
+
+.bold {
+    color: var(--blue-black-color1);
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+  }
+
+
 
 @media (min-width: 90em) {
 
