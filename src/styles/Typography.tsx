@@ -39,3 +39,22 @@ export const P = styled.p`
       font-size: 1.5rem;
     `}
 `;
+export const H3 = styled.h3`
+  margin-bottom: 2.4rem;
+  ${(props) =>
+    props.color === "indigo" &&
+    css`
+      color: var(--indigo-color);
+      font-weight: 500;
+      font-size: 1.5rem;
+      line-height: 1.8rem;
+    `}
+  ${(props) =>
+    props.color === "grey" &&
+    css`
+      color: var(--blue-grey-color1);
+      font-weight: 700;
+      font-size: 1.8rem;
+      line-height: 3.2rem;
+    `}
+`;
