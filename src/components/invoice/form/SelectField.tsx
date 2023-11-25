@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Select from "react-select";
 import SelectStyle from "../../../styles/Select";
@@ -17,7 +17,7 @@ function SelectField({ options, fieldName }: IProps) {
   const { register, setValue } = useFormContext();
   const [selected, setSelected] = useState<IOptions | null>(null);
 
-  function handleChange(selectedValue) {
+  function handleChange(selectedValue: IOptions | null) {
     if (selectedValue) {
       setSelected(selectedValue);
     }
