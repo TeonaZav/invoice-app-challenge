@@ -1,9 +1,10 @@
 import { AddressContainer } from "../../../styles/Form";
+import { useFormContext, FieldErrors } from "react-hook-form";
 import FormRow from "../../UI/FormRow";
 import Input from "../../../styles/Input";
-
-import { useFormContext, FieldErrors } from "react-hook-form";
-
+import SelectField from "./SelectField";
+import { useQuery } from "@tanstack/react-query";
+import { getCountries } from "../../../services/apiCountries";
 interface IProps {
   address: string;
 }
@@ -13,6 +14,16 @@ function AddressFields({ address }: IProps) {
     register,
     formState: { errors },
   } = useFormContext();
+
+  const { data } = useQuery({
+    queryKey: ["countries"],
+    queryFn: getCountries,
+  });
+
+  const countryOptions = data?.data.map((el) => {
+    return { value: el.iso2, label: el.country };
+  });
+
   return (
     <>
       <FormRow
@@ -57,17 +68,15 @@ function AddressFields({ address }: IProps) {
             })}
           />
         </FormRow>
+
         <FormRow
           label="Country"
           error={(errors[address] as FieldErrors)?.country?.message?.toString()}
           boxtype="tertiary"
         >
-          <Input
-            type="text"
-            id={`${address}.country`}
-            {...register(`${address}.country`, {
-              required: "This field is required",
-            })}
+          <SelectField
+            options={countryOptions}
+            fieldName={`${address}.country`}
           />
         </FormRow>
       </AddressContainer>
