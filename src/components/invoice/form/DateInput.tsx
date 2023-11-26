@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import FormRow from "../../UI/FormRow";
 
 function DateInput() {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(null);
 
   const {
     register,
@@ -31,9 +31,7 @@ function DateInput() {
       <DatePickerStyles boxtype="secondary">
         <DatePicker
           id="createdAt"
-          {...register("createdAt", {
-            required: "Invoice date is required",
-          })}
+          {...register("createdAt")}
           minDate={new Date()}
           placeholderText="d MMM yyyy"
           autoComplete="off"
@@ -42,7 +40,6 @@ function DateInput() {
           calendarClassName="rasta-stripes"
           dateFormat="d MMM yyyy"
           monthsShown={1}
-          isClearable
         ></DatePicker>
       </DatePickerStyles>
     </FormRow>

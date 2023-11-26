@@ -33,16 +33,7 @@ function SelectField({ options, fieldName }: IProps) {
       <Select
         id={fieldName}
         value={selected}
-        {...register(fieldName, {
-          validate: (value) => {
-            console.log(value);
-            if (!value) {
-              return "This field is required.";
-            }
-            return false;
-          },
-          required: "This field is required.",
-        })}
+        {...register(fieldName)}
         onChange={handleChange}
         options={options}
         className="react-select-container"

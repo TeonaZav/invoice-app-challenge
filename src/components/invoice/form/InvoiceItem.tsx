@@ -15,7 +15,12 @@ interface IInvoiceItemProps {
 function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
   const [total, setTotal] = useState(0);
 
-  const { register, watch, setValue } = useFormContext();
+  const {
+    register,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
 
   useEffect(() => {
     setValue(`items.${index}.id`, fieldId);
@@ -26,7 +31,12 @@ function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
       console.log(values);
       const price = values.items[index].price;
       const quantity = values.items[index].quantity;
-      if (price && quantity) setTotal(price * quantity);
+      if (price && quantity) {
+        console.log(price, quantity);
+        setTotal(price * quantity);
+      } else {
+        setTotal(0);
+      }
     });
     setValue(`items.${index}.total`, total, {
       shouldDirty: true,
@@ -42,6 +52,7 @@ function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
         label="Item Name"
         boxtype="productname"
         invoiceItem={index > 0 && true}
+        error={(errors?.items as any)?.[index]?.name?.message?.toString()}
       >
         <Input
           type="text"
@@ -49,39 +60,42 @@ function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
           {...register(`items.${index}.name`, {
             required: "Item name is required",
           })}
+          error={(errors?.items as any)?.[index]?.name ? true : false}
         />
       </FormRow>
-      <FormRow label="Qty." boxtype="xs" invoiceItem={index > 0 && true}>
+      <FormRow
+        label="Qty."
+        boxtype="xs"
+        invoiceItem={index > 0 && true}
+        error={(errors?.items as any)?.[index]?.quantity?.message?.toString()}
+      >
         <Input
           type="number"
           min={1}
           id={`items.${index}.quantity`}
-          {...register(`items.${index}.quantity`, {
-            required: "Required",
-            valueAsNumber: true,
-            validate: (val) => {
-              if (val && val < 1) {
-                return "< 1";
-              }
-              return true;
-            },
-          })}
+          {...register(`items.${index}.quantity`)}
+          error={(errors?.items as any)?.[index]?.quantity ? true : false}
         />
       </FormRow>
-      <FormRow label="Price USD" boxtype="sm" invoiceItem={index > 0 && true}>
+      <FormRow
+        label="Price USD"
+        boxtype="sm"
+        invoiceItem={index > 0 && true}
+        error={(errors?.items as any)?.[index]?.price?.message?.toString()}
+      >
         <Input
           type="number"
-          min={1}
+          min={0}
           id={`items.${index}.price`}
           {...register(`items.${index}.price`, {
-            required: "Required",
             valueAsNumber: true,
           })}
+          error={(errors?.items as any)?.[index]?.price ? true : false}
         />
       </FormRow>
       <FormRow label="Total USD" boxtype="sm" invoiceItem={index > 0 && true}>
         <Input
-          type="currency"
+          type="number"
           min={0}
           id={`items.${index}.total`}
           {...register(`items.${index}.total`, {

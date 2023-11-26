@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
-import { useForm, FormProvider, useFieldArray } from "react-hook-form";
+import {
+  useForm,
+  FormProvider,
+  useFieldArray,
+  FieldErrors,
+} from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-import { useCreateInvoice } from "../../../hooks/useCreateInvoice";
-import { useDeleteInvoice } from "../../../hooks/useDeleteInvoice";
+// import { useCreateInvoice } from "../../../hooks/useCreateInvoice";
+// import { useDeleteInvoice } from "../../../hooks/useDeleteInvoice";
 import { H2, H3 } from "../../../styles/Typography";
 import {
   Form,
@@ -20,16 +25,18 @@ import Button from "../../../styles/Button";
 import InvoiceItem from "./InvoiceItem";
 import { paymentOptions } from "../../../DummyData";
 import ButtonPanel from "../../ButtonPanel";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { validationSchema } from "./Schema";
 
 function InvoiceForm() {
-  const { create } = useCreateInvoice();
-  const { deleteInv } = useDeleteInvoice();
+  // const { create } = useCreateInvoice();
+  // const { deleteInv } = useDeleteInvoice();
   const [subTotal, setSubTotal] = useState(0);
   const [due, setDue] = useState("");
 
   const methods = useForm<FormValues>({
     defaultValues: {
-      createdAt: new Date().toLocaleString(),
+      createdAt: "",
       paymentDue: "",
       description: "",
       paymentTerms: null,
@@ -59,7 +66,8 @@ function InvoiceForm() {
       ],
       total: 0,
     },
-    mode: "onChange",
+    // mode: "onChange",
+    resolver: yupResolver<FormValues>(validationSchema),
   });
 
   const {
@@ -81,7 +89,7 @@ function InvoiceForm() {
     console.log("submitting...");
   }
 
-  function onError(errors) {
+  function onError(errors: FieldErrors<FormValues>) {
     console.log(errors);
   }
 
@@ -128,13 +136,7 @@ function InvoiceForm() {
               error={errors?.clientName?.message}
               boxtype="primary"
             >
-              <Input
-                type="text"
-                id="clientName"
-                {...register("clientName", {
-                  required: "This field is required",
-                })}
-              />
+              <Input type="text" id="clientName" {...register("clientName")} />
             </FormRow>
             <FormRow
               label="Client’s Email"
@@ -144,14 +146,7 @@ function InvoiceForm() {
               <Input
                 type="text"
                 id="clientEmail"
-                {...register("clientEmail", {
-                  required: "This field is required",
-                  pattern: {
-                    value:
-                      /(?!^[.+&'_-]*@.*$)(^[_\w\d+&'-]+(\.[_\w\d+&'-]*)*@[\w\d-]+(\.[\w\d-]+)*\.(([\d]{1,3})|([\w]{2,}))$)/,
-                    message: "Invalid email format!",
-                  },
-                })}
+                {...register("clientEmail")}
               />
             </FormRow>
             <AddressFields address={"clientAddress"} />
@@ -177,9 +172,7 @@ function InvoiceForm() {
                 <Input
                   type="text"
                   id="description"
-                  {...register("description", {
-                    required: "This field is required",
-                  })}
+                  {...register("description")}
                 />
               </FormRow>
             </DateDescriptionWrap>
