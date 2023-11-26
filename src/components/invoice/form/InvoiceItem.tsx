@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { ItemCt, BtnDelete } from "../../../styles/Form";
 import IconDelete from "../../../assets/icon-delete.svg";
+import IconOval from "../../../assets/oval-green.svg";
 import FormRow from "../../UI/FormRow";
 import Input from "../../../styles/Input";
 
@@ -37,17 +38,9 @@ function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
 
   return (
     <ItemCt id={fieldId}>
-      <FormRow label="id" boxtype="xs" invoiceItem={index > 0 && true}>
-        <Input
-          type="text"
-          id={`items.${index}.id`}
-          value={fieldId}
-          {...register(`items.${index}.id`)}
-        />
-      </FormRow>
       <FormRow
         label="Item Name"
-        boxtype="primary"
+        boxtype="productname"
         invoiceItem={index > 0 && true}
       >
         <Input
@@ -99,10 +92,19 @@ function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
         />
       </FormRow>
 
-      {index > 0 && (
+      <Input
+        type="text"
+        id={`items.${index}.id`}
+        value={fieldId}
+        {...register(`items.${index}.id`)}
+        className="displayNone"
+      />
+      {index > 0 ? (
         <BtnDelete onClick={() => remove(index)}>
           <img src={IconDelete} alt="" />
         </BtnDelete>
+      ) : (
+        <img src={IconOval} alt="" />
       )}
     </ItemCt>
   );

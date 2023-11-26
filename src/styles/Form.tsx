@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const FormContainer = styled.div`
   width: 32.7rem;
@@ -44,12 +44,19 @@ export const ItemCt = styled.div`
   flex-direction: row;
   gap: 1.6rem;
   flex-wrap: wrap;
+  align-items: center;
 
   @media (min-width: 48em) {
     box-sizing: border-box;
     flex-direction: row;
     flex-wrap: nowrap;
     width: 50.4rem;
+  }
+`;
+export const BtnDelete = styled.div`
+  cursor: pointer;
+  margin-bottom: -2rem;
+  @media (min-width: 48em) {
   }
 `;
 export const ItemsCt = styled.div`
@@ -70,4 +77,16 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
+`;
+
+export const Label = styled.label`
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--blue-grey-color2);
+  line-height: 1.5rem;
+  ${(props) =>
+    props.color === "error" &&
+    css`
+      color: var(--red-color);
+    `}
 `;
