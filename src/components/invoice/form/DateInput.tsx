@@ -16,7 +16,7 @@ function DateInput() {
 
   function handleDateChange(date: Date) {
     if (date) {
-      setValue("createdAt", date.toISOString());
+      setValue("createdAt", date.toLocaleString());
     }
 
     setStartDate(date);
