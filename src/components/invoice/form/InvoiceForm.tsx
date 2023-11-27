@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   useForm,
   FormProvider,
@@ -6,22 +6,25 @@ import {
   FieldErrors,
 } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-// import { useCreateInvoice } from "../../../hooks/useCreateInvoice";
-// import { useDeleteInvoice } from "../../../hooks/useDeleteInvoice";
-import { H2, H3 } from "../../../styles/Typography";
+import { useCreateInvoice } from "../../../hooks/useCreateInvoice";
+import { useDeleteInvoice } from "../../../hooks/useDeleteInvoice";
+import { UIContext } from "../../../context/uiContext";
+import { H2, H3 } from "../../../styles/sharedStyles/Typography";
+import IconClose from "../../../assets/icon-close.svg";
 import {
   Form,
   FormContainer,
   DateDescriptionWrap,
   ItemsCt,
-} from "../../../styles/Form";
+  FormHeader,
+} from "../../../styles/formStyles/FormStyle";
 import { FormValues } from "./Type";
 import FormRow from "../../UI/FormRow";
-import Input from "../../../styles/Input";
+import Input from "../../../styles/formStyles/InputStyle";
 import AddressFields from "./AddressFields";
 import DateInput from "./DateInput";
 import SelectField from "./SelectField";
-import Button from "../../../styles/Button";
+import Button from "../../../styles/sharedStyles/ButtonStyles";
 import InvoiceItem from "./InvoiceItem";
 import { paymentOptions } from "../../../DummyData";
 import ButtonPanel from "../../ButtonPanel";
@@ -29,8 +32,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "./Schema";
 
 function InvoiceForm() {
-  // const { create } = useCreateInvoice();
-  // const { deleteInv } = useDeleteInvoice();
+  const { create } = useCreateInvoice();
+  const { deleteInv } = useDeleteInvoice();
+  const { toggleDrawer } = useContext(UIContext);
   const [subTotal, setSubTotal] = useState(0);
   const [due, setDue] = useState("");
 
@@ -66,7 +70,7 @@ function InvoiceForm() {
       ],
       total: 0,
     },
-    // mode: "onChange",
+    mode: "onChange",
     resolver: yupResolver<FormValues>(validationSchema),
   });
 
@@ -85,8 +89,9 @@ function InvoiceForm() {
   });
 
   function onSubmit(data: FormValues) {
-    console.log(data);
     console.log("submitting...");
+    console.log(data);
+    create(data);
   }
 
   function onError(errors: FieldErrors<FormValues>) {
@@ -125,7 +130,11 @@ function InvoiceForm() {
     <>
       <FormContainer>
         <DevTool control={control} />
-        <H2 color="dark">New Invoice</H2>
+        <FormHeader>
+          <H2 color="dark">New Invoice</H2>
+          <img src={IconClose} onClick={toggleDrawer(false)} />
+        </FormHeader>
+
         <FormProvider {...methods}>
           <Form onSubmit={handleSubmit(onSubmit, onError)}>
             <H3 color="indigo">Bill From</H3>
@@ -133,15 +142,15 @@ function InvoiceForm() {
             <H3 color="indigo">Bill To</H3>
             <FormRow
               label="Client’s Name"
-              error={errors?.clientName?.message}
-              boxtype="primary"
+              error={errors?.clientName?.message?.toString()}
+              $boxtype="primary"
             >
               <Input type="text" id="clientName" {...register("clientName")} />
             </FormRow>
             <FormRow
               label="Client’s Email"
-              error={errors?.clientEmail?.message}
-              boxtype="primary"
+              error={errors?.clientEmail?.message?.toString()}
+              $boxtype="primary"
             >
               <Input
                 type="text"
@@ -156,7 +165,7 @@ function InvoiceForm() {
               <FormRow
                 label="Payment Terms"
                 error={errors?.paymentTerms?.message?.toString()}
-                boxtype="secondary"
+                $boxtype="secondary"
               >
                 <SelectField
                   options={paymentOptions}
@@ -166,8 +175,8 @@ function InvoiceForm() {
 
               <FormRow
                 label="Project Description"
-                error={errors?.description?.message}
-                boxtype="primary"
+                error={errors?.description?.message?.toString()}
+                $boxtype="primary"
               >
                 <Input
                   type="text"
@@ -190,7 +199,7 @@ function InvoiceForm() {
               })}
               <Button
                 type="button"
-                btn="newproduct"
+                $btn="newproduct"
                 onClick={() =>
                   append({
                     id: "",

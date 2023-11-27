@@ -1,7 +1,7 @@
-import { AddressContainer } from "../../../styles/Form";
+import { AddressContainer } from "../../../styles/formStyles/FormStyle";
 import { useFormContext, FieldErrors } from "react-hook-form";
 import FormRow from "../../UI/FormRow";
-import Input from "../../../styles/Input";
+import Input from "../../../styles/formStyles/InputStyle";
 import SelectField from "./SelectField";
 import { useQuery } from "@tanstack/react-query";
 import { getCountries } from "../../../services/apiCountries";
@@ -29,7 +29,7 @@ function AddressFields({ address }: IProps) {
       <FormRow
         label="Street Address"
         error={(errors[address] as FieldErrors)?.street?.message?.toString()}
-        boxtype="primary"
+        $boxtype="primary"
       >
         <Input
           type="text"
@@ -43,7 +43,7 @@ function AddressFields({ address }: IProps) {
         <FormRow
           label="City"
           error={(errors[address] as FieldErrors)?.city?.message?.toString()}
-          boxtype="tertiary"
+          $boxtype="tertiary"
         >
           <Input
             type="text"
@@ -58,7 +58,7 @@ function AddressFields({ address }: IProps) {
           error={(
             errors[address] as FieldErrors
           )?.postCode?.message?.toString()}
-          boxtype="tertiary"
+          $boxtype="tertiary"
         >
           <Input
             type="text"
@@ -72,7 +72,7 @@ function AddressFields({ address }: IProps) {
         <FormRow
           label="Country"
           error={(errors[address] as FieldErrors)?.country?.message?.toString()}
-          boxtype="tertiary"
+          $boxtype="tertiary"
         >
           <SelectField
             options={countryOptions}

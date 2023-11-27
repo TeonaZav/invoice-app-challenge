@@ -1,19 +1,21 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
-import IconPlus from "../../assets/icon-plus.svg";
-import IconDown from "../../assets/icon-arrow-down.svg";
-import Button from "../../styles/Button";
-import { P } from "../../styles/Typography";
+import IconPlus from "../../../assets/icon-plus.svg";
+import IconDown from "../../../assets/icon-arrow-down.svg";
+
+import { P } from "../../../styles/sharedStyles/Typography";
+import { UIContext } from "../../../context/uiContext";
+import Button from "../../../styles/sharedStyles/ButtonStyles";
 
 interface InvoiceListHeaderProps {
   itemCount: number;
 }
 
 function InvoiceListHeader({ itemCount }: InvoiceListHeaderProps) {
+  const { openDrawer, toggleDrawer } = useContext(UIContext);
   const [filterByValue, setFilterByValue] = useState("");
 
   function handleSelect(e) {
-    console.log(e.target.value);
     setFilterByValue(e.target.value);
   }
 
@@ -42,12 +44,23 @@ function InvoiceListHeader({ itemCount }: InvoiceListHeaderProps) {
             <option value="draft">draft</option>
           </select>
         </div>
-        <Button btn="btnAdd">
-          <div className="add">
-            <img src={IconPlus} />
-          </div>
-          New
-        </Button>
+
+        {toggleDrawer && (
+          <Button
+            onClick={toggleDrawer(!openDrawer)}
+            // sx={{ zIndex: 1500 }}
+            $btn={"btnAdd"}
+          >
+            {
+              <>
+                <div className="add">
+                  <img src={IconPlus} />
+                </div>
+                <span>New</span>
+              </>
+            }
+          </Button>
+        )}
       </div>
     </StyledInvoiceListHeader>
   );

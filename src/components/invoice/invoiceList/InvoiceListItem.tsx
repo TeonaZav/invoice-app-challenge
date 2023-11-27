@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { currencyFormat } from "../../utils/helpers";
-import Status from "./InvoiceStatus";
-import Container from "../../styles/Container";
-import { P } from "../../styles/Typography";
+import { currencyFormat } from "../../../utils/helpers";
+import Status from "../../UI/Status";
+import { Container } from "../../../styles/sharedStyles/StyledContainers";
+import { P } from "../../../styles/sharedStyles/Typography";
 
 interface InvoiceListItemProps {
   id: string;

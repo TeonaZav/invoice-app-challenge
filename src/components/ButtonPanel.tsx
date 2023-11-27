@@ -1,16 +1,16 @@
-import { ButtonPanelCt } from "../styles/Form";
-import Button from "../styles/Button";
+import { ButtonPanelCt } from "../styles/sharedStyles/StyledContainers";
+import Button from "../styles/sharedStyles/ButtonStyles";
 
 function ButtonPanel() {
   return (
-    <ButtonPanelCt>
-      <Button type="button" btn="discard">
+    <ButtonPanelCt $ct={"form"}>
+      <Button type="button" $btn="discard">
         Discard
       </Button>
-      <Button type="button" btn="draft">
+      <Button type="button" $btn="draft">
         Save as Draft
       </Button>
-      <Button type="submit" btn="save">
+      <Button type="submit" $btn="save">
         Save & Send
       </Button>
     </ButtonPanelCt>

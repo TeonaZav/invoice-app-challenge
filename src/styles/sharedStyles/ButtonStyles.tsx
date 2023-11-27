@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-const Button = styled.button<{ btn: string }>`
+const Button = styled.button<{ $btn: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +16,7 @@ const Button = styled.button<{ btn: string }>`
   color: #fff;
   height: 4.8rem;
   ${(props) =>
-    props.btn === "btnAdd" &&
+    props.$btn === "btnAdd" &&
     css`
       width: 9rem;
       padding: 0 1.7rem 0 0.5rem;
@@ -37,7 +37,7 @@ const Button = styled.button<{ btn: string }>`
     `}
 
   ${(props) =>
-    props.btn === "newproduct" &&
+    props.$btn === "newproduct" &&
     css`
       width: 100%;
       justify-content: center;
@@ -49,7 +49,7 @@ const Button = styled.button<{ btn: string }>`
     `}
 
     ${(props) =>
-    props.btn === "edit" &&
+    props.$btn === "edit" &&
     css`
       width: 7.3rem;
       justify-content: center;
@@ -60,7 +60,7 @@ const Button = styled.button<{ btn: string }>`
       }
     `}
     ${(props) =>
-    props.btn === "delete" &&
+    props.$btn === "delete" &&
     css`
       width: 8.9rem;
       justify-content: center;
@@ -73,7 +73,7 @@ const Button = styled.button<{ btn: string }>`
 
 
     ${(props) =>
-    (props.btn === "markpaid" || props.btn === "save") &&
+    (props.$btn === "markpaid" || props.$btn === "save") &&
     css`
       width: 13.8rem;
       justify-content: center;
@@ -84,7 +84,7 @@ const Button = styled.button<{ btn: string }>`
       }
     `}
     ${(props) =>
-    (props.btn === "cancel" || props.btn === "discard") &&
+    (props.$btn === "cancel" || props.$btn === "discard") &&
     css`
       width: 8.4rem;
       justify-content: center;
@@ -95,7 +95,7 @@ const Button = styled.button<{ btn: string }>`
       }
     `}
     ${(props) =>
-    props.btn === "draft" &&
+    props.$btn === "draft" &&
     css`
       width: 13.3rem;
       justify-content: center;

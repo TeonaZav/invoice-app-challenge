@@ -1,18 +1,21 @@
 import styled, { css } from "styled-components";
 
-const Input = styled.input<{ styletype?: string }>`
+const Input = styled.input<{
+  $styletype?: string;
+  $error?: boolean | undefined;
+}>`
   border: 1px solid var(--light-blue-color);
   background-color: var(--card-color);
   border-radius: 0.4rem;
   padding: 1.8rem 1rem;
   height: 4.8rem;
   ${(props) =>
-    props.color === "error" &&
+    props.$error &&
     css`
-      border: 1px solid var(--red-color);
+      border: 1px solid var(--red-pale);
     `}
   ${(props) =>
-    props.styletype === "calculated" &&
+    props.$styletype === "calculated" &&
     css`
       border: none;
       padding: 0;

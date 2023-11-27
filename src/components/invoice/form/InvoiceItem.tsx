@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { ItemCt, BtnDelete } from "../../../styles/Form";
+import { ItemCt, BtnDelete } from "../../../styles/formStyles/FormStyle";
 import IconDelete from "../../../assets/icon-delete.svg";
 import IconOval from "../../../assets/oval-green.svg";
 import FormRow from "../../UI/FormRow";
-import Input from "../../../styles/Input";
+import Input from "../../../styles/formStyles/InputStyle";
 
 interface IInvoiceItemProps {
   fieldId: string;
@@ -50,7 +50,7 @@ function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
     <ItemCt id={fieldId}>
       <FormRow
         label="Item Name"
-        boxtype="productname"
+        $boxtype="productname"
         invoiceItem={index > 0 && true}
         error={(errors?.items as any)?.[index]?.name?.message?.toString()}
       >
@@ -60,12 +60,12 @@ function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
           {...register(`items.${index}.name`, {
             required: "Item name is required",
           })}
-          error={(errors?.items as any)?.[index]?.name ? true : false}
+          $error={(errors?.items as any)?.[index]?.name ? true : false}
         />
       </FormRow>
       <FormRow
         label="Qty."
-        boxtype="xs"
+        $boxtype="xs"
         invoiceItem={index > 0 && true}
         error={(errors?.items as any)?.[index]?.quantity?.message?.toString()}
       >
@@ -74,12 +74,12 @@ function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
           min={1}
           id={`items.${index}.quantity`}
           {...register(`items.${index}.quantity`)}
-          error={(errors?.items as any)?.[index]?.quantity ? true : false}
+          $error={(errors?.items as any)?.[index]?.quantity ? true : false}
         />
       </FormRow>
       <FormRow
         label="Price USD"
-        boxtype="sm"
+        $boxtype="sm"
         invoiceItem={index > 0 && true}
         error={(errors?.items as any)?.[index]?.price?.message?.toString()}
       >
@@ -90,10 +90,10 @@ function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
           {...register(`items.${index}.price`, {
             valueAsNumber: true,
           })}
-          error={(errors?.items as any)?.[index]?.price ? true : false}
+          $error={(errors?.items as any)?.[index]?.price ? true : false}
         />
       </FormRow>
-      <FormRow label="Total USD" boxtype="sm" invoiceItem={index > 0 && true}>
+      <FormRow label="Total USD" $boxtype="sm" invoiceItem={index > 0 && true}>
         <Input
           type="number"
           min={0}
@@ -102,7 +102,7 @@ function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
             valueAsNumber: true,
           })}
           value={total}
-          styletype="calculated"
+          $styletype="calculated"
         />
       </FormRow>
 

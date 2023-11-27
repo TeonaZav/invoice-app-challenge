@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import DatePicker from "react-datepicker";
-import { DatePickerStyles } from "../../../styles/DatePickerStyles";
+import { DatePickerStyles } from "../../../styles/formStyles/DatePickerStyles";
 import "react-datepicker/dist/react-datepicker.css";
 import FormRow from "../../UI/FormRow";
 
@@ -26,9 +26,9 @@ function DateInput() {
     <FormRow
       label="Invoice Date"
       error={errors?.createdAt?.message?.toString()}
-      boxtype="secondary"
+      $boxtype="secondary"
     >
-      <DatePickerStyles boxtype="secondary">
+      <DatePickerStyles $boxtype="secondary">
         <DatePicker
           id="createdAt"
           {...register("createdAt")}

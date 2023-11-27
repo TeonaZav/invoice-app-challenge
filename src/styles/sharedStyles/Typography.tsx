@@ -41,7 +41,6 @@ export const P = styled.p`
 `;
 
 export const H2 = styled.h3`
-  margin-bottom: 2.4rem;
   font-size: 2.4rem;
 
   font-weight: 700;

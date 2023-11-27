@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Select from "react-select";
-import SelectStyle from "../../../styles/Select";
+import SelectStyle from "../../../styles/formStyles/SelectStyle";
 
 interface IOptions {
   value: number;

@@ -1,8 +1,14 @@
-import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import { currencyFormat } from "../../utils/helpers";
-import { P } from "../../styles/Typography";
-
+import { P } from "../../styles/sharedStyles/Typography";
+import {
+  Products,
+  PoductsList,
+  TH,
+  TD,
+  PoductsListMobile,
+  Subtotal,
+} from "../../styles/invoicePageStyles/ProductsStyles";
 interface IProductsProps {
   items: { name: string; quantity: number; price: number; total: number }[];
   subtotal: number;
@@ -12,39 +18,51 @@ function InvoiceProducts({ items, subtotal }: IProductsProps) {
   const isTablet = useMediaQuery({ query: "(min-width: 48em)" });
 
   return (
-    <StyledProducts>
+    <Products>
       {isTablet ? (
-        <table className="product-list">
+        <PoductsList>
           <thead>
             <tr>
-              <th className="pale text-left">Item Name</th>
-              <th className="pale text-left">QTY.</th>
-              <th className="pale text-right">Price</th>
-              <th className="pale text-right">Total</th>
+              <TH className="pale" $justify="left">
+                Item Name
+              </TH>
+              <TH className="pale" $justify="left">
+                QTY.
+              </TH>
+              <TH className="pale" $justify="right">
+                Price
+              </TH>
+              <TH className="pale" $justify="right">
+                Total
+              </TH>
             </tr>
           </thead>
           <tbody>
             {items.map((row, index) => {
               return (
                 <tr key={index}>
-                  <td className="bold text-left">{row.name}</td>
-                  <td className="pale text-left">{row.quantity}</td>
-                  <td className="pale text-right">
+                  <TD className="bold" $justify="left">
+                    {row.name}
+                  </TD>
+                  <TD className="pale" $justify="left">
+                    {row.quantity}
+                  </TD>
+                  <TD className="pale" $justify="right">
                     {currencyFormat(row.price)}
-                  </td>
-                  <td className="bold text-right">
+                  </TD>
+                  <TD className="bold" $justify="right">
                     {currencyFormat(row.total)}
-                  </td>
+                  </TD>
                 </tr>
               );
             })}
           </tbody>
-        </table>
+        </PoductsList>
       ) : (
-        <div className="product-list-mobile">
-          {items.map((row) => {
+        <PoductsListMobile>
+          {items.map((row, index) => {
             return (
-              <div className="product-row-mobile">
+              <div className="product-row-mobile" key={index}>
                 <div>
                   <P color="bold">{row.name}</P>
                   <P color="pale">
@@ -57,65 +75,16 @@ function InvoiceProducts({ items, subtotal }: IProductsProps) {
               </div>
             );
           })}
-        </div>
+        </PoductsListMobile>
       )}
 
-      <div className="invoice-subtotal">
+      <Subtotal className="invoice-subtotal">
         <P color="pale">Amount Due</P>
 
         <p className="subtotal">{currencyFormat(subtotal)}</p>
-      </div>
-    </StyledProducts>
+      </Subtotal>
+    </Products>
   );
 }
 
 export default InvoiceProducts;
-
-const StyledProducts = styled.section`
-  background-color: var(--light-blue-color2);
-  width: 100%;
-  border-radius: 8px 8px 0px 0px;
-  .product-list-mobile {
-    display: flex;
-    flex-direction: column;
-    gap: 2.4rem;
-    padding: 2.4rem;
-    .product-row-mobile {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-  }
-  .invoice-subtotal {
-    width: 100%;
-    height: 8rem;
-    background-color: var(--header-bg-color);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 2.4rem;
-
-    .subtotal {
-      color: var(--card-color);
-      font-weight: 700;
-      font-size: 2rem;
-    }
-  }
-  .text-left {
-    text-align: left;
-    padding-bottom: 1.6rem;
-  }
-  .text-right {
-    text-align: right;
-    padding-bottom: 1.6rem;
-  }
-  @media (min-width: 48em) {
-    .invoice-subtotal {
-      padding: 3.2rem;
-    }
-    .product-list {
-      width: 100%;
-      padding: 3.2rem;
-    }
-  }
-`;

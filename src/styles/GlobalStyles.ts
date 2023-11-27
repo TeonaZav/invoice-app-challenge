@@ -38,6 +38,7 @@ input:-webkit-autofill:active {
   --red-color: #ec5757;
   --red-pale: #ff9797;
   --blue-grey-color1: #888eb0;
+  
   --blue-grey-color2: #7e88c3;
   --light-blue-color: #dfe3fa;
   --light-blue-color2: #F9FAFE;
@@ -88,8 +89,12 @@ body {
     line-height: 1.5rem;
   }
 
-
-
+.hidden{
+  visibility: hidden;
+}
+.displayNone{
+  display:none
+}
 @media (min-width: 90em) {
 
 }

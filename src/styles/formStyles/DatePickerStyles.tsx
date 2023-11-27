@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const DatePickerStyles = styled.div<{ boxtype: string }>`
+export const DatePickerStyles = styled.div<{ $boxtype: string }>`
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
@@ -110,7 +110,7 @@ export const DatePickerStyles = styled.div<{ boxtype: string }>`
   }
 
   ${(props) =>
-    props.boxtype === "secondary" &&
+    props.$boxtype === "secondary" &&
     css`
       @media (min-width: 48em) {
         max-width: 24rem;
