@@ -1,30 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
 import InvoiceListItem from "./InvoiceListItem";
 import InvoiceListHeader from "./InvoiceListHeader";
-import { db } from "../../../config/firebase-config";
-import { getDocs, collection } from "firebase/firestore";
 import { StyledList } from "../../../styles/invoiceListStyles/StyledInvoiceList";
+import { useInvoices } from "../../../hooks/useInvoices";
+import Loader from "../../UI/Loader";
 
 function InvoiceList() {
-  const invoiceCollectionRef = collection(db, "invoices");
-
-  const getInvoices = async () => {
-    const data = await getDocs(invoiceCollectionRef);
-    return data;
-  };
-
-  const { isLoading, data } = useQuery({
-    queryKey: ["invoices"],
-    queryFn: getInvoices,
-  });
-
-  if (isLoading) return;
-
-  const dataInvoices = data?.docs.map((doc) => {
-    return { ...doc.data(), id: doc.id };
-  });
-
+  const { dataInvoices, isLoading } = useInvoices();
   const totalNumberOfInvoices = dataInvoices?.length;
+
+  if (isLoading) return <Loader />;
 
   return (
     <>
