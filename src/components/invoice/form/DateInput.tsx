@@ -1,12 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import { DatePickerStyles } from "../../../styles/formStyles/DatePickerStyles";
 import "react-datepicker/dist/react-datepicker.css";
 import FormRow from "../../UI/FormRow";
 
-function DateInput() {
+interface Iprops {
+  edit: boolean;
+  date: string;
+}
+
+function DateInput({ edit, date }: Iprops) {
   const [startDate, setStartDate] = useState<Date | null>(null);
+
+  useEffect(() => {
+    if (edit) {
+      setStartDate(new Date(date));
+    }
+  }, []);
 
   const {
     register,

@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 import { currencyFormat } from "../../../utils/helpers";
 import Status from "../../UI/Status";
 import { Container } from "../../../styles/sharedStyles/StyledContainers";
 import { P } from "../../../styles/sharedStyles/Typography";
-
+import Icon from "../../../assets/icon-arrow-right.svg";
+import { FormatDate } from "../../../utils/helpers";
 interface InvoiceListItemProps {
   id: string;
   clientName: string;
@@ -27,7 +29,7 @@ function InvoiceListItem({
             <span className="pale">#</span>
             {id}
           </P>
-          <P color="pale">{paymentDue}</P>
+          <P color="pale">{FormatDate(paymentDue)}</P>
         </div>
         <P color="pale" className="name">
           {clientName}
@@ -35,7 +37,12 @@ function InvoiceListItem({
         <P color="bold" className="total">
           {currencyFormat(total)}
         </P>
-        <Status status={status} />
+        <div className="flex-ct-2">
+          <Status status={status} />
+          <NavLink to={`/invoice/${id}`}>
+            <img src={Icon} alt="" className="open-invoice" />
+          </NavLink>
+        </div>
       </StyledListItem>
     </Container>
   );
@@ -65,15 +72,24 @@ const StyledListItem = styled.li`
     flex-direction: column;
     width: 50%;
   }
-
+  .flex-ct-2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+  .open-invoice {
+    cursor: pointer;
+  }
   @media (min-width: 48em) {
     height: 7.2rem;
     flex-wrap: nowrap;
     align-items: center;
+    justify-content: space-between;
     .flex-ct-1 {
       flex-direction: row;
-      width: 30%;
-      gap: 2.9rem;
+      width: auto;
+      gap: 1.6rem;
     }
     .name {
       width: auto;

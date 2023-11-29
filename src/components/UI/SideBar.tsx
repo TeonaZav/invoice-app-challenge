@@ -1,33 +1,45 @@
-import { useState } from "react";
+import { useCallback } from "react";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import Button from "@mui/material/Button";
+import InvoiceForm from "../invoice/form/InvoiceForm";
+import { useMediaQuery } from "react-responsive";
+import { useInvoiceContextForm } from "../../context/formContext";
 
 export default function SideBar() {
-  const [state, setState] = useState(false);
+  const [{ drawerIsOpen }, dispatch] = useInvoiceContextForm();
 
-  const toggleDrawer = (open: boolean) => () => {
-    setState(open);
-  };
+  const toggleDrawer = useCallback(
+    () => () => {
+      dispatch({
+        type: "TOGGLE_DRAWER",
+        payload: !drawerIsOpen,
+      });
+    },
+    [dispatch, drawerIsOpen]
+  );
 
+  const isTablet = useMediaQuery({ query: "(min-width: 48em)" });
+  const isDes = useMediaQuery({ query: "(min-width: 90em)" });
   const list = () => (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-      <p>drawer</p>
+    <Box
+      sx={{
+        width: isDes ? 719 : isTablet ? 616 : "100vw",
+        marginLeft: isDes ? "12rem" : 0,
+        position: "relative",
+      }}
+      role="presentation"
+    >
+      <InvoiceForm />
     </Box>
   );
 
   return (
-    <div>
-      <>
-        <Button onClick={toggleDrawer(true)}>{"left"}</Button>
-        <SwipeableDrawer
-          open={state}
-          onClose={toggleDrawer(false)}
-          onOpen={toggleDrawer(true)}
-        >
-          {list()}
-        </SwipeableDrawer>
-      </>
-    </div>
+    <SwipeableDrawer
+      open={drawerIsOpen}
+      onOpen={toggleDrawer()}
+      onClose={toggleDrawer()}
+    >
+      {list()}
+    </SwipeableDrawer>
   );
 }

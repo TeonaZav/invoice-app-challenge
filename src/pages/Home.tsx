@@ -1,4 +1,4 @@
-import InvoiceList from "../components/invoice/InvoiceList";
+import InvoiceList from "../components/invoice/invoiceList/InvoiceList";
 
 function Home() {
   return <InvoiceList />;

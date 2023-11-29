@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Select from "react-select";
 import SelectStyle from "../../../styles/formStyles/SelectStyle";
@@ -11,11 +11,19 @@ interface IOptions {
 interface IProps {
   options: IOptions[];
   fieldName: string;
+  edit: boolean;
+  editValue: number | string;
 }
-
-function SelectField({ options, fieldName }: IProps) {
+function SelectField({ options, fieldName, edit, editValue }: IProps) {
   const { register, setValue } = useFormContext();
   const [selected, setSelected] = useState<IOptions | null>(null);
+
+  useEffect(() => {
+    const editOption = options?.filter(
+      (option: IOptions) => option.value == editValue
+    );
+    setSelected(editOption?.[0]);
+  }, [options, editValue]);
 
   function handleChange(selectedValue: IOptions | null) {
     if (selectedValue) {

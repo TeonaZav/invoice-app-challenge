@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useForm,
   FormProvider,
@@ -8,7 +8,7 @@ import {
 import { DevTool } from "@hookform/devtools";
 import { useCreateInvoice } from "../../../hooks/useCreateInvoice";
 import { useDeleteInvoice } from "../../../hooks/useDeleteInvoice";
-import { UIContext } from "../../../context/uiContext";
+
 import { H2, H3 } from "../../../styles/sharedStyles/Typography";
 import IconClose from "../../../assets/icon-close.svg";
 import {
@@ -31,12 +31,21 @@ import ButtonPanel from "../../ButtonPanel";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "./Schema";
 
+import { useInvoiceContextForm } from "../../../context/formContext";
+
 function InvoiceForm() {
-  const { create } = useCreateInvoice();
+  const { createInvoice } = useCreateInvoice();
   const { deleteInv } = useDeleteInvoice();
-  const { toggleDrawer } = useContext(UIContext);
   const [subTotal, setSubTotal] = useState(0);
   const [due, setDue] = useState("");
+  const [{ isEditSession, default: formCurrentValues }, dispatch] =
+    useInvoiceContextForm();
+
+  function handleDrawer() {
+    dispatch({
+      type: "CLOSE_DRAWER",
+    });
+  }
 
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -70,6 +79,7 @@ function InvoiceForm() {
       ],
       total: 0,
     },
+
     mode: "onChange",
     resolver: yupResolver<FormValues>(validationSchema),
   });
@@ -81,6 +91,7 @@ function InvoiceForm() {
     control,
     setValue,
     watch,
+    reset,
   } = methods;
 
   const { fields, append, remove } = useFieldArray({
@@ -88,10 +99,16 @@ function InvoiceForm() {
     control,
   });
 
+  useEffect(() => {
+    if (isEditSession) {
+      reset(formCurrentValues);
+    }
+  }, [isEditSession, formCurrentValues, reset]);
+
   function onSubmit(data: FormValues) {
     console.log("submitting...");
     console.log(data);
-    create(data);
+    // createInvoice(data);
   }
 
   function onError(errors: FieldErrors<FormValues>) {
@@ -132,13 +149,17 @@ function InvoiceForm() {
         <DevTool control={control} />
         <FormHeader>
           <H2 color="dark">New Invoice</H2>
-          <img src={IconClose} onClick={toggleDrawer(false)} />
+          <img src={IconClose} onClick={handleDrawer} />
         </FormHeader>
 
         <FormProvider {...methods}>
           <Form onSubmit={handleSubmit(onSubmit, onError)}>
             <H3 color="indigo">Bill From</H3>
-            <AddressFields address={"senderAddress"} />
+            <AddressFields
+              address={"senderAddress"}
+              edit={isEditSession}
+              editValue={formCurrentValues.senderAddress}
+            />
             <H3 color="indigo">Bill To</H3>
             <FormRow
               label="Client’s Name"
@@ -158,10 +179,17 @@ function InvoiceForm() {
                 {...register("clientEmail")}
               />
             </FormRow>
-            <AddressFields address={"clientAddress"} />
+            <AddressFields
+              address={"clientAddress"}
+              edit={isEditSession}
+              editValue={formCurrentValues.clientAddress}
+            />
 
             <DateDescriptionWrap>
-              <DateInput />
+              <DateInput
+                edit={isEditSession}
+                date={formCurrentValues.createdAt}
+              />
               <FormRow
                 label="Payment Terms"
                 error={errors?.paymentTerms?.message?.toString()}
@@ -170,6 +198,8 @@ function InvoiceForm() {
                 <SelectField
                   options={paymentOptions}
                   fieldName={"paymentTerms"}
+                  edit={isEditSession}
+                  editValue={formCurrentValues.paymentTerms}
                 />
               </FormRow>
 

@@ -1,7 +1,7 @@
 import Status from "../UI/Status";
 import { Container } from "../../styles/sharedStyles/StyledContainers";
 import { P } from "../../styles/sharedStyles/Typography";
-import InvoiceButtons from "../InvoiceButtons";
+import InvoiceButtons from "./InvoiceButtons";
 import {
   StyledInvoicePageHeader,
   StyledHeaderPanel,
