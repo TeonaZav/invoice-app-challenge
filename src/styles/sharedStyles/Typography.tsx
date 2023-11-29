@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const P = styled.p`
+export const P = styled.p<{ color: string }>`
   ${(props) =>
     props.color === "pale" &&
     css`

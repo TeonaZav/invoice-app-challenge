@@ -5,23 +5,28 @@ import SideBar from "./SideBar";
 
 function AppLayOut() {
   return (
-    <div>
+    <>
       <Header />
       <SideBar />
       <Main>
         <Outlet />
       </Main>
-    </div>
+    </>
   );
 }
 export default AppLayOut;
 
 const Main = styled.main`
-  background-color: tomato;
+  background-color: var(--main-bg-color);
+  min-height: 100vh;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 3.6rem 2.4rem 10.5rem 2.4rem;
+  padding-top: 14rem;
+  padding-bottom: 8rem;
+  @media (min-width: 90em) {
+    padding-top: 8rem;
+  }
 `;
