@@ -1,6 +1,6 @@
 {
   "homepage": "https://TeonaZav.github.io/invoice-app-challenge",
-  "name": "invoice-app-redux",
+  "name": "invoice-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
