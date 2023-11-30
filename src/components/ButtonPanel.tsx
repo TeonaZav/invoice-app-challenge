@@ -4,6 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { useSaveDraft } from "../hooks/useCreateDraft";
 import { useEditDraft } from "../hooks/useEditDraft";
 import { useInvoiceContextForm } from "../context/formContext";
+import { FormValues } from "./invoice/form/Type";
 
 function ButtonPanel() {
   const { saveDraft } = useSaveDraft();
@@ -12,14 +13,18 @@ function ButtonPanel() {
 
   const { getValues } = useFormContext();
 
+  interface Idata {
+    id: string;
+    changedDraft: FormValues;
+  }
   function saveToDrafts() {
     const currentValues = getValues();
     console.log(currentValues);
     if (currentValues.id) {
       const id = currentValues.id;
-      editDraft({ changedDraft: { ...currentValues }, id });
+      editDraft({ changedDraft: { ...currentValues }, id } as Idata);
     } else {
-      saveDraft(currentValues);
+      saveDraft(currentValues as FormValues);
     }
     dispatch({
       type: "END_EDIT",

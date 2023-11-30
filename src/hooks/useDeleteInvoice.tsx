@@ -1,3 +1,4 @@
+import { FirestoreError } from "firebase/firestore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { deleteInvoice } from "../services/apiInvoices";
@@ -14,7 +15,7 @@ export function useDeleteInvoice() {
         queryKey: ["invoices"],
       });
     },
-    onError: (err) => toast.error(err.message),
+    onError: (err: FirestoreError) => toast.error(err.message),
   });
 
   return { isDeleting, deleteInv };
