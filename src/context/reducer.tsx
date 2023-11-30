@@ -58,6 +58,12 @@ const reducer = (state: any, action: any) => {
         ...state,
         drawerIsOpen: action.payload,
       };
+    case "END_EDIT":
+      return {
+        ...state,
+        drawerIsOpen: false,
+        isEditSession: false,
+      };
     default:
       return state;
   }

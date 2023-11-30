@@ -7,8 +7,9 @@ import {
 } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { useCreateInvoice } from "../../../hooks/useCreateInvoice";
+import { useEditInvoice } from "../../../hooks/useEditInvoice";
 import { useDeleteInvoice } from "../../../hooks/useDeleteInvoice";
-
+import { useInvoiceContextForm } from "../../../context/formContext";
 import { H2, H3 } from "../../../styles/sharedStyles/Typography";
 import IconClose from "../../../assets/icon-close.svg";
 import {
@@ -31,13 +32,14 @@ import ButtonPanel from "../../ButtonPanel";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "./Schema";
 
-import { useInvoiceContextForm } from "../../../context/formContext";
-
 function InvoiceForm() {
-  const { createInvoice } = useCreateInvoice();
+  const { createInv } = useCreateInvoice();
+  const { editInvoice } = useEditInvoice();
   const { deleteInv } = useDeleteInvoice();
+
   const [subTotal, setSubTotal] = useState(0);
   const [due, setDue] = useState("");
+
   const [{ isEditSession, default: formCurrentValues }, dispatch] =
     useInvoiceContextForm();
 
@@ -106,9 +108,21 @@ function InvoiceForm() {
   }, [isEditSession, formCurrentValues, reset]);
 
   function onSubmit(data: FormValues) {
-    console.log("submitting...");
     console.log(data);
-    // createInvoice(data);
+    if (isEditSession) {
+      const id = formCurrentValues.id;
+      editInvoice(
+        { changedData: { ...data }, id },
+        {
+          onSuccess: (data) => {
+            reset();
+          },
+        }
+      );
+    }
+
+    if (!isEditSession) createInv(data);
+    console.log("submiting...");
   }
 
   function onError(errors: FieldErrors<FormValues>) {
@@ -123,7 +137,6 @@ function InvoiceForm() {
       if (invoiceDate && terms) {
         const date = new Date(invoiceDate);
         date.setDate(date.getDate() + terms);
-        console.log(invoiceDate, terms, date, due);
         setDue(date.toLocaleString());
       }
       const items = values.items;
@@ -148,7 +161,14 @@ function InvoiceForm() {
       <FormContainer>
         <DevTool control={control} />
         <FormHeader>
-          <H2 color="dark">New Invoice</H2>
+          {isEditSession ? (
+            <H2 color="dark">
+              <span className="pale">#</span>
+              {formCurrentValues.id}
+            </H2>
+          ) : (
+            <H2 color="dark">New Invoice</H2>
+          )}
           <img src={IconClose} onClick={handleDrawer} />
         </FormHeader>
 

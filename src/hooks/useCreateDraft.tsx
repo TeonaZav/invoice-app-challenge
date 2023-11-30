@@ -1,19 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
-import { createInvoice } from "../services/apiInvoices";
+import { createDraft } from "../services/apiInvoices";
 
-export function useCreateInvoice() {
+export function useSaveDraft() {
   const queryClient = useQueryClient();
 
-  const { mutate: createInv, isLoading: isCreating } = useMutation({
-    mutationFn: createInvoice,
+  const { mutate: saveDraft, isLoading: isSaving } = useMutation({
+    mutationFn: (data) => createDraft(data),
     onSuccess: () => {
-      toast.success("New invoice successfully created");
+      toast.success("New draft successfully created");
       queryClient.invalidateQueries({ queryKey: ["invoices"] });
       queryClient.invalidateQueries({ queryKey: ["invoice"] });
     },
     onError: (err) => toast.error(err.message),
   });
 
-  return { isCreating, createInv };
+  return { isSaving, saveDraft };
 }

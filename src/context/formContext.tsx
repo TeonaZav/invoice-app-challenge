@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import { initialState } from "../reducer";
+import { initialState } from "./reducer";
 
 export const InvoiceFormContext = createContext(initialState);
 

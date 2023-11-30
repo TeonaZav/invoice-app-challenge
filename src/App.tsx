@@ -8,7 +8,7 @@ import Invoice from "./pages/Invoice";
 import AppLayOut from "./components/UI/AppLayout";
 import { UIProvider } from "./context/uiContext";
 import { InvoiceFormProvider } from "./context/formContext";
-import reducer, { initialState } from "./reducer";
+import reducer, { initialState } from "./context/reducer";
 import PageNotFound from "./pages/PageNotFound";
 
 const queryClient = new QueryClient({

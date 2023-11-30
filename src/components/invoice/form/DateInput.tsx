@@ -11,13 +11,13 @@ interface Iprops {
 }
 
 function DateInput({ edit, date }: Iprops) {
-  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
 
   useEffect(() => {
-    if (edit) {
+    if (edit && date) {
       setStartDate(new Date(date));
     }
-  }, []);
+  }, [date, edit]);
 
   const {
     register,
