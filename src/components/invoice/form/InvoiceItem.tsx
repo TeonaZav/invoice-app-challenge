@@ -28,11 +28,9 @@ function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
 
   useEffect(() => {
     const subscription = watch((values) => {
-      console.log(values);
       const price = values.items[index].price;
       const quantity = values.items[index].quantity;
       if (price && quantity) {
-        console.log(price, quantity);
         setTotal(price * quantity);
       } else {
         setTotal(0);
@@ -84,7 +82,7 @@ function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
         error={(errors?.items as any)?.[index]?.price?.message?.toString()}
       >
         <Input
-          type="number"
+          type="currency"
           min={0}
           id={`items.${index}.price`}
           {...register(`items.${index}.price`, {
@@ -95,7 +93,7 @@ function InvoiceItem({ fieldId, index, remove }: IInvoiceItemProps) {
       </FormRow>
       <FormRow label="Total USD" $boxtype="sm" invoiceItem={index > 0 && true}>
         <Input
-          type="number"
+          type="currency"
           min={0}
           id={`items.${index}.total`}
           {...register(`items.${index}.total`, {

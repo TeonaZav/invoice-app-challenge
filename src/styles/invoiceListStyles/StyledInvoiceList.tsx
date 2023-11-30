@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const StyledList = styled.ul`
   width: 100vw;
@@ -38,33 +38,33 @@ export const StyledListHeader = styled.div`
   }
 `;
 
-const StyledFilterList = styled.div`
-  cursor: pointer;
-  position: relative;
-  width: 10rem;
-  .select,
-  label {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--blue-black-color1);
-    display: block;
-  }
-  .select {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    padding: 0.5rem 0;
-    opacity: 0;
-    border: 0 none;
-  }
-  .label {
-    position: relative;
-  }
-  @media (min-width: 48em) {
-    width: 15rem;
-    .select,
-    label {
-      font-size: 1.5rem;
-    }
-  }
-`;
+// const StyledFilterList = styled.div`
+//   cursor: pointer;
+//   position: relative;
+//   width: 10rem;
+//   .select,
+//   label {
+//     font-size: 1rem;
+//     font-weight: 700;
+//     color: var(--blue-black-color1);
+//     display: block;
+//   }
+//   .select {
+//     width: 100%;
+//     position: absolute;
+//     top: 0;
+//     padding: 0.5rem 0;
+//     opacity: 0;
+//     border: 0 none;
+//   }
+//   .label {
+//     position: relative;
+//   }
+//   @media (min-width: 48em) {
+//     width: 15rem;
+//     .select,
+//     label {
+//       font-size: 1.5rem;
+//     }
+//   }
+// `;

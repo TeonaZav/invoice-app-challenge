@@ -1,20 +1,21 @@
 import { useState } from "react";
-import Select, { components } from "react-select";
+import Select, { components, OptionProps } from "react-select";
+
+interface IProps extends OptionProps<{ value: string; label: string }> {}
 
 function InputOption({
   getStyles,
-  Icon,
   isDisabled,
   isSelected,
   children,
   innerProps,
   ...rest
-}) {
-  const style = {
+}: IProps) {
+  const style: React.CSSProperties = {
     alignItems: "center",
     backgroundColor: "transparent",
     color: "black",
-    display: "flex ",
+    display: "flex",
   };
 
   const props = {
@@ -60,12 +61,17 @@ export default function FilterList() {
           Option: InputOption,
         }}
         styles={{
-          control: (baseStyles, state) => ({
+          control: (baseStyles) => ({
             ...baseStyles,
             borderColor: "transparent",
           }),
         }}
       />
+      <p>
+        {selectedOptions?.map((value) => {
+          return value;
+        })}
+      </p>
     </>
   );
 }

@@ -1,4 +1,13 @@
-export const initialState = {
+import { FormValues } from "../components/invoice/form/Type";
+
+type StateType = {
+  isEditSession: boolean;
+  drawerIsOpen: boolean;
+  default: FormValues;
+};
+type ActionType = { type: string; payload: any };
+
+export const initialState: StateType = {
   isEditSession: false,
   drawerIsOpen: false,
   default: {
@@ -34,13 +43,13 @@ export const initialState = {
   },
 };
 
-const reducer = (state: any, action: any) => {
+const reducer = (state: StateType, action: ActionType) => {
   switch (action.type) {
     case "EDIT_FORM":
       return {
         ...state,
-        default: { ...action.item },
-        drawerIsOpen: action.drawer,
+        default: { ...action.payload.invoice },
+        drawerIsOpen: action.payload.drawer,
         isEditSession: true,
       };
     case "CLOSE_DRAWER":

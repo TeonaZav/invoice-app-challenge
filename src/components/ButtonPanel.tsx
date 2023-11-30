@@ -21,7 +21,6 @@ function ButtonPanel() {
     } else {
       saveDraft(currentValues);
     }
-
     dispatch({
       type: "END_EDIT",
     });

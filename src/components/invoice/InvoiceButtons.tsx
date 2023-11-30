@@ -11,7 +11,7 @@ function InvoiceButtons() {
 
   const { id } = useParams() as { id: string };
 
-  const { isLoading, data } = useQuery({
+  const { data } = useQuery({
     queryKey: ["invoice"],
     queryFn: () => getInvoice(id),
   });
@@ -21,8 +21,7 @@ function InvoiceButtons() {
   const fillFormForEdit = () => {
     dispatch({
       type: "EDIT_FORM",
-      item: invoice,
-      drawer: !drawerIsOpen,
+      payload: { invoice: invoice, drawer: !drawerIsOpen },
     });
     console.log(drawerIsOpen);
   };
