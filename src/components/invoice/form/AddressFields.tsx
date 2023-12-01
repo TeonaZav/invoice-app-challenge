@@ -7,8 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getCountries } from "../../../services/apiCountries";
 import { IAddress } from "../../../interfacese/IInvoice";
 interface IProps {
-  address: string;
-  edit: boolean;
+  address: string | undefined;
+  edit: boolean | undefined;
   editValue: IAddress;
 }
 
@@ -23,7 +23,7 @@ function AddressFields({ address, edit, editValue }: IProps) {
     queryFn: getCountries,
   });
 
-  const countryOptions = data?.data.map((el) => {
+  const countryOptions = data?.data.map((el: any) => {
     return { value: el.iso2, label: el.country };
   });
 
@@ -31,7 +31,10 @@ function AddressFields({ address, edit, editValue }: IProps) {
     <>
       <FormRow
         label="Street Address"
-        error={(errors[address] as FieldErrors)?.street?.message?.toString()}
+        error={
+          address &&
+          (errors[address] as FieldErrors)?.street?.message?.toString()
+        }
         $boxtype="primary"
       >
         <Input
@@ -45,7 +48,10 @@ function AddressFields({ address, edit, editValue }: IProps) {
       <AddressContainer>
         <FormRow
           label="City"
-          error={(errors[address] as FieldErrors)?.city?.message?.toString()}
+          error={
+            address &&
+            (errors[address] as FieldErrors)?.city?.message?.toString()
+          }
           $boxtype="tertiary"
         >
           <Input
@@ -58,9 +64,10 @@ function AddressFields({ address, edit, editValue }: IProps) {
         </FormRow>
         <FormRow
           label="Post Code"
-          error={(
-            errors[address] as FieldErrors
-          )?.postCode?.message?.toString()}
+          error={
+            address &&
+            (errors[address] as FieldErrors)?.postCode?.message?.toString()
+          }
           $boxtype="tertiary"
         >
           <Input
@@ -74,7 +81,10 @@ function AddressFields({ address, edit, editValue }: IProps) {
 
         <FormRow
           label="Country"
-          error={(errors[address] as FieldErrors)?.country?.message?.toString()}
+          error={
+            address &&
+            (errors[address] as FieldErrors)?.country?.message?.toString()
+          }
           $boxtype="tertiary"
         >
           <SelectField

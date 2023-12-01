@@ -11,11 +11,6 @@ interface InvoiceListHeaderProps {
 function InvoiceListHeader({ itemCount }: InvoiceListHeaderProps) {
   const { drawerToggle } = useInvoiceForm();
   function handleDrawer() {
-    // console.log(drawerIsOpen);
-    // dispatch({
-    //   type: "TOGGLE_DRAWER",
-    //   payload: !drawerIsOpen,
-    // });
     drawerToggle();
   }
   return (

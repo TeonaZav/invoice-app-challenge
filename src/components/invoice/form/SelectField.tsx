@@ -11,10 +11,10 @@ interface IOptions {
 interface IProps {
   options: IOptions[];
   fieldName: string;
-  edit: boolean;
+  edit: boolean | undefined;
   editValue: number | string;
 }
-function SelectField({ options, fieldName, edit, editValue }: IProps) {
+function SelectField({ options, fieldName, editValue }: IProps) {
   const { register, setValue } = useFormContext();
   const [selected, setSelected] = useState<IOptions | null>(null);
 
