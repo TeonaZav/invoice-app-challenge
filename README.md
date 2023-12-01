@@ -1,4 +1,4 @@
-# Frontend Mentor - Invoice app challenge (React + TypeScript + react-query + supabase)
+# Frontend Mentor - Invoice app challenge (React + TypeScript + react-query + Firebase)
 
 ## Currently under construction
 
@@ -14,3 +14,14 @@ Users should be able to:
 - Filter invoices by status (draft/pending/paid)
 - Toggle light and dark mode
 - **Bonus**: Keep track of any changes, even after refreshing the browser (`localStorage` could be used for this if you're not building out a full-stack app)
+
+## My process
+
+### Built with
+
+- React JS
+- react-query
+- Context API + useReducer
+- TypeScript
+- Firebase
+- Styled Components - For styles
