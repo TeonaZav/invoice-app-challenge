@@ -105,5 +105,24 @@ const Button = styled.button<{ $btn: string }>`
         background-color: var(--blue-black-color1);
       }
     `}
+
+    ${(props) =>
+    props.$btn === "btnGoBack" &&
+    css`
+      width: 11rem;
+      padding: 0.5rem 1.5rem;
+      justify-content: space-between;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background-color: transparent;
+      color: var(--blue-black-color2);
+
+      img {
+        width: 1rem;
+      }
+      &:hover {
+        background-color: var(--light-blue-color);
+      }
+    `}
 `;
 export default Button;
