@@ -11,7 +11,6 @@ export function useCreateInvoice() {
     onSuccess: () => {
       toast.success("New invoice successfully created");
       queryClient.invalidateQueries({ queryKey: ["invoices"] });
-      queryClient.invalidateQueries({ queryKey: ["invoice"] });
     },
     onError: (err: FirestoreError) => toast.error(err.message),
   });

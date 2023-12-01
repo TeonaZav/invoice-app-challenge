@@ -12,7 +12,6 @@ export function useSaveDraft() {
     onSuccess: () => {
       toast.success("New draft successfully created");
       queryClient.invalidateQueries({ queryKey: ["invoices"] });
-      queryClient.invalidateQueries({ queryKey: ["invoice"] });
     },
     onError: (err: FirestoreError) => toast.error(err?.message),
   });

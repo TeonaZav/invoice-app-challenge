@@ -9,7 +9,7 @@ interface Idata {
   changedData: FormValues;
 }
 
-export function useEditInvoice() {
+export function useEditInvoice(id: string = "") {
   const queryClient = useQueryClient();
 
   const { mutate: editInvoice, isLoading: isEditing } = useMutation({
@@ -17,7 +17,7 @@ export function useEditInvoice() {
     onSuccess: () => {
       toast.success("Invoice successfully edited");
       queryClient.invalidateQueries({ queryKey: ["invoices"] });
-      queryClient.invalidateQueries({ queryKey: ["invoice"] });
+      queryClient.invalidateQueries({ queryKey: ["invoices", id] });
     },
     onError: (err: FirestoreError) => toast.error(err.message),
   });

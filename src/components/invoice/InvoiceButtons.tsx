@@ -1,33 +1,22 @@
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import Button from "../../styles/sharedStyles/ButtonStyles";
 import { ButtonPanelCt } from "../../styles/sharedStyles/StyledContainers";
 
-import { getInvoice } from "../../services/apiInvoices";
-import { IInvoice } from "../../interfacese/IInvoice";
-import { useInvoiceContextForm } from "../../context/formContext";
+import { useInvoiceForm } from "../../context/formContext";
+import { useInvoice } from "../../hooks/useInvoice";
 function InvoiceButtons() {
-  const [{ drawerIsOpen }, dispatch] = useInvoiceContextForm();
+  const { fillFormForEdit } = useInvoiceForm();
 
   const { id } = useParams() as { id: string };
+  const { invoice } = useInvoice(id);
 
-  const { data } = useQuery({
-    queryKey: ["invoice"],
-    queryFn: () => getInvoice(id),
-  });
+  function handFormFill() {
+    fillFormForEdit(invoice);
+  }
 
-  const invoice: IInvoice = { ...data?.data(), id: data?.id };
-
-  const fillFormForEdit = () => {
-    dispatch({
-      type: "EDIT_FORM",
-      payload: { invoice: invoice, drawer: !drawerIsOpen },
-    });
-    console.log(drawerIsOpen);
-  };
   return (
     <ButtonPanelCt $ct={"invoice"}>
-      <Button $btn="edit" onClick={fillFormForEdit}>
+      <Button $btn="edit" onClick={handFormFill}>
         Edit
       </Button>
 

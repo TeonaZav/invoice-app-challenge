@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { Container } from "../../styles/sharedStyles/StyledContainers";
 import { P } from "../../styles/sharedStyles/Typography";
@@ -8,20 +7,14 @@ import {
 } from "../../styles/invoicePageStyles/InvoiceContentStyles";
 import InvoiceProducts from "./InvoiceProducts";
 import Loader from "../UI/Loader";
-import { IInvoice } from "../../interfacese/IInvoice";
-import { getInvoice } from "../../services/apiInvoices";
+
+import { useInvoice } from "../../hooks/useInvoice";
+
 function InvoiceContent() {
   const { id } = useParams() as { id: string };
-
-  const { isLoading, data } = useQuery({
-    queryKey: ["invoice"],
-    queryFn: () => getInvoice(id),
-  });
-
-  const invoice: IInvoice = { ...data?.data(), id: data?.id };
+  const { isLoading, invoice } = useInvoice(id);
 
   if (isLoading) return <Loader />;
-
   return (
     <Container>
       {invoice && (

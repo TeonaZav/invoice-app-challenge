@@ -7,7 +7,6 @@ import Home from "./pages/Home";
 import Invoice from "./pages/Invoice";
 import AppLayOut from "./components/UI/AppLayout";
 import { InvoiceFormProvider } from "./context/formContext";
-import reducer, { initialState } from "./context/reducer";
 import PageNotFound from "./pages/PageNotFound";
 
 const queryClient = new QueryClient({
@@ -21,7 +20,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <InvoiceFormProvider initialState={initialState} reducer={reducer}>
+      <InvoiceFormProvider>
         <ReactQueryDevtools initialIsOpen={false} />
         <GlobalStyles />
         <BrowserRouter>

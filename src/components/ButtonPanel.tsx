@@ -3,15 +3,16 @@ import Button from "../styles/sharedStyles/ButtonStyles";
 import { useFormContext } from "react-hook-form";
 import { useSaveDraft } from "../hooks/useCreateDraft";
 import { useEditDraft } from "../hooks/useEditDraft";
-import { useInvoiceContextForm } from "../context/formContext";
+import { useInvoiceForm } from "../context/formContext";
 import { FormValues } from "./invoice/form/Type";
 
 function ButtonPanel() {
   const { saveDraft } = useSaveDraft();
-  const { editDraft } = useEditDraft();
-  const [state, dispatch] = useInvoiceContextForm();
+  const { endFormEdit } = useInvoiceForm();
 
   const { getValues } = useFormContext();
+  const currentValues = getValues();
+  const { editDraft } = useEditDraft(currentValues.id);
 
   interface Idata {
     id: string;
@@ -26,9 +27,7 @@ function ButtonPanel() {
     } else {
       saveDraft(currentValues as FormValues);
     }
-    dispatch({
-      type: "END_EDIT",
-    });
+    endFormEdit();
   }
 
   return (

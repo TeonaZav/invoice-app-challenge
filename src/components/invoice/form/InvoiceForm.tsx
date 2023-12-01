@@ -8,8 +8,8 @@ import {
 import { DevTool } from "@hookform/devtools";
 import { useCreateInvoice } from "../../../hooks/useCreateInvoice";
 import { useEditInvoice } from "../../../hooks/useEditInvoice";
-import { useDeleteInvoice } from "../../../hooks/useDeleteInvoice";
-import { useInvoiceContextForm } from "../../../context/formContext";
+// import { useDeleteInvoice } from "../../../hooks/useDeleteInvoice";
+import { useInvoiceForm } from "../../../context/formContext";
 import { H2, H3 } from "../../../styles/sharedStyles/Typography";
 import IconClose from "../../../assets/icon-close.svg";
 import {
@@ -19,7 +19,6 @@ import {
   ItemsCt,
   FormHeader,
 } from "../../../styles/formStyles/FormStyle";
-import { FormValues } from "./Type";
 import FormRow from "../../UI/FormRow";
 import Input from "../../../styles/formStyles/InputStyle";
 import AddressFields from "./AddressFields";
@@ -31,59 +30,31 @@ import { paymentOptions } from "../../../DummyData";
 import ButtonPanel from "../../ButtonPanel";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "./Schema";
+import { FormValues } from "./Type";
+import { DefaultFormValuesType } from "../../../context/types";
+import { defaultVAl } from "./defaultValues";
 
 function InvoiceForm() {
   const { createInv } = useCreateInvoice();
-  const { editInvoice } = useEditInvoice();
-  const { deleteInv } = useDeleteInvoice();
-
+  // const { deleteInv } = useDeleteInvoice();
   const [subTotal, setSubTotal] = useState(0);
   const [due, setDue] = useState("");
+  const {
+    state: { default: formCurrentValues, isEditSession },
+    closeDrawer,
+  } = useInvoiceForm();
 
-  const [{ isEditSession, default: formCurrentValues }, dispatch] =
-    useInvoiceContextForm();
+  const { editInvoice } = useEditInvoice(formCurrentValues?.id);
 
   function handleDrawer() {
-    dispatch({
-      type: "CLOSE_DRAWER",
-    });
+    closeDrawer();
   }
 
-  const methods = useForm<FormValues>({
-    defaultValues: {
-      createdAt: "",
-      paymentDue: "",
-      description: "",
-      paymentTerms: null,
-      clientName: "",
-      clientEmail: "",
-      status: "draft",
-      senderAddress: {
-        street: "",
-        city: "",
-        postCode: "",
-        country: "",
-      },
-      clientAddress: {
-        street: "",
-        city: "",
-        postCode: "",
-        country: "",
-      },
-      items: [
-        {
-          id: "",
-          name: "",
-          quantity: 1,
-          price: 0,
-          total: 0,
-        },
-      ],
-      total: 0,
-    },
+  const methods = useForm<FormValues | DefaultFormValuesType>({
+    defaultValues: defaultVAl,
 
     mode: "onChange",
-    resolver: yupResolver<FormValues>(validationSchema),
+    resolver: yupResolver<FormValues | DefaultFormValuesType>(validationSchema),
   });
 
   const {
@@ -102,14 +73,14 @@ function InvoiceForm() {
   });
 
   useEffect(() => {
-    if (isEditSession) {
+    if (isEditSession && formCurrentValues) {
       reset(formCurrentValues);
     }
   }, [isEditSession, formCurrentValues, reset]);
 
   function onSubmit(data: FormValues) {
     console.log(data);
-    if (isEditSession) {
+    if (isEditSession && formCurrentValues) {
       const id = formCurrentValues.id;
       editInvoice(
         { changedData: { ...data }, id },
@@ -164,7 +135,7 @@ function InvoiceForm() {
           {isEditSession ? (
             <H2 color="dark">
               <span className="pale">#</span>
-              {formCurrentValues.id}
+              {formCurrentValues?.id}
             </H2>
           ) : (
             <H2 color="dark">New Invoice</H2>
@@ -178,7 +149,7 @@ function InvoiceForm() {
             <AddressFields
               address={"senderAddress"}
               edit={isEditSession}
-              editValue={formCurrentValues.senderAddress}
+              editValue={formCurrentValues?.senderAddress}
             />
             <H3 color="indigo">Bill To</H3>
             <FormRow
@@ -202,13 +173,13 @@ function InvoiceForm() {
             <AddressFields
               address={"clientAddress"}
               edit={isEditSession}
-              editValue={formCurrentValues.clientAddress}
+              editValue={formCurrentValues?.clientAddress}
             />
 
             <DateDescriptionWrap>
               <DateInput
                 edit={isEditSession}
-                date={formCurrentValues.createdAt}
+                date={formCurrentValues?.createdAt}
               />
               <FormRow
                 label="Payment Terms"
@@ -219,7 +190,7 @@ function InvoiceForm() {
                   options={paymentOptions}
                   fieldName={"paymentTerms"}
                   edit={isEditSession}
-                  editValue={formCurrentValues.paymentTerms}
+                  editValue={formCurrentValues?.paymentTerms}
                 />
               </FormRow>
 

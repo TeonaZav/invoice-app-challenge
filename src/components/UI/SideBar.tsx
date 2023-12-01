@@ -3,19 +3,19 @@ import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import InvoiceForm from "../invoice/form/InvoiceForm";
 import { useMediaQuery } from "react-responsive";
-import { useInvoiceContextForm } from "../../context/formContext";
+import { useInvoiceForm } from "../../context/formContext";
 
 export default function SideBar() {
-  const [{ drawerIsOpen }, dispatch] = useInvoiceContextForm();
+  const {
+    state: { drawerIsOpen },
+    drawerToggle,
+  } = useInvoiceForm();
 
   const toggleDrawer = useCallback(
     () => () => {
-      dispatch({
-        type: "TOGGLE_DRAWER",
-        payload: !drawerIsOpen,
-      });
+      drawerToggle();
     },
-    [dispatch, drawerIsOpen]
+    [drawerToggle]
   );
 
   const isTablet = useMediaQuery({ query: "(min-width: 48em)" });
