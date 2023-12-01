@@ -7,7 +7,6 @@ export type Item = {
 };
 
 export type FormValues = {
-  id: "";
   createdAt: string;
   paymentDue: string;
   description: string;

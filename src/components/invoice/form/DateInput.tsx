@@ -7,7 +7,7 @@ import FormRow from "../../UI/FormRow";
 
 interface Iprops {
   edit: boolean;
-  date: string;
+  date: string | undefined;
 }
 
 function DateInput({ edit, date }: Iprops) {

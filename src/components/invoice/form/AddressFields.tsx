@@ -5,11 +5,18 @@ import Input from "../../../styles/formStyles/InputStyle";
 import SelectField from "./SelectField";
 import { useQuery } from "@tanstack/react-query";
 import { getCountries } from "../../../services/apiCountries";
-import { IAddress } from "../../../interfacese/IInvoice";
+
+export interface IAddressProps {
+  street?: string | undefined;
+  city?: string | undefined;
+  postCode?: string | undefined;
+  country?: string | undefined;
+}
+
 interface IProps {
   address: string | undefined;
   edit: boolean | undefined;
-  editValue: IAddress;
+  editValue: IAddressProps | undefined;
 }
 
 function AddressFields({ address, edit, editValue }: IProps) {
@@ -91,7 +98,7 @@ function AddressFields({ address, edit, editValue }: IProps) {
             options={countryOptions}
             fieldName={`${address}.country`}
             edit={edit}
-            editValue={editValue.country}
+            editValue={editValue?.country}
           />
         </FormRow>
       </AddressContainer>

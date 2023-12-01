@@ -12,8 +12,9 @@ interface IProps {
   options: IOptions[];
   fieldName: string;
   edit: boolean | undefined;
-  editValue: number | string;
+  editValue: number | string | undefined | null;
 }
+
 function SelectField({ options, fieldName, editValue }: IProps) {
   const { register, setValue } = useFormContext();
   const [selected, setSelected] = useState<IOptions | null>(null);

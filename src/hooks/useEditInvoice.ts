@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { FormValues } from "../components/invoice/form/Type";
 
 interface Idata {
-  id: string;
+  id: string | undefined;
   changedData: FormValues;
 }
 
@@ -13,7 +13,7 @@ export function useEditInvoice(id: string = "") {
   const queryClient = useQueryClient();
 
   const { mutate: editInvoice, isLoading: isEditing } = useMutation({
-    mutationFn: ({ changedData, id }: Idata) => updateInvoice(changedData, id),
+    mutationFn: ({ changedData }: Idata) => updateInvoice(changedData, id),
     onSuccess: () => {
       toast.success("Invoice successfully edited");
       queryClient.invalidateQueries({ queryKey: ["invoices"] });

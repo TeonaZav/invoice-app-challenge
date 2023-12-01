@@ -31,7 +31,6 @@ import ButtonPanel from "../../ButtonPanel";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "./Schema";
 import { FormValues } from "./Type";
-import { DefaultFormValuesType } from "../../../context/types";
 import { defaultVAl } from "./defaultValues";
 
 function InvoiceForm() {
@@ -50,11 +49,10 @@ function InvoiceForm() {
     closeDrawer();
   }
 
-  const methods = useForm<FormValues | DefaultFormValuesType>({
+  const methods = useForm<FormValues>({
     defaultValues: defaultVAl,
-
     mode: "onChange",
-    resolver: yupResolver<FormValues | DefaultFormValuesType>(validationSchema),
+    resolver: yupResolver<FormValues>(validationSchema),
   });
 
   const {
@@ -85,7 +83,7 @@ function InvoiceForm() {
       editInvoice(
         { changedData: { ...data }, id },
         {
-          onSuccess: (data) => {
+          onSuccess: () => {
             reset();
           },
         }
@@ -178,7 +176,7 @@ function InvoiceForm() {
 
             <DateDescriptionWrap>
               <DateInput
-                edit={isEditSession}
+                edit={isEditSession || false}
                 date={formCurrentValues?.createdAt}
               />
               <FormRow
