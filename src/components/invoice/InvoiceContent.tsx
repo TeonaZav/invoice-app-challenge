@@ -12,8 +12,8 @@ import { useInvoice } from "../../hooks/useInvoice";
 function InvoiceContent() {
   const { id: paramsId } = useParams() as { id: string };
 
-  const { isLoading, invoice } = useInvoice(paramsId);
-
+  const { isLoading, invoice, invoiceId } = useInvoice(paramsId);
+  console.log(invoice);
   if (isLoading) return <Loader />;
   return (
     <>
@@ -24,7 +24,7 @@ function InvoiceContent() {
               <div>
                 <P color="bold">
                   <span className="pale">#</span>
-                  {invoice?.id}
+                  {invoice?.id || invoiceId}
                 </P>
                 <P color="pale">{invoice?.description}</P>
               </div>

@@ -14,5 +14,6 @@ export function useInvoice(id: string) {
   const invoiceCont: DefaultFormValuesType = { ...data?.data() };
   const invoiceId: string | undefined = data?.id;
   const invoice = { id: invoiceId, ...invoiceCont };
+  console.log(invoiceId);
   return { isLoading, error, invoice, getInvoice, invoiceId };
 }

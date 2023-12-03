@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   useForm,
   FormProvider,
@@ -8,7 +9,6 @@ import {
 import { DevTool } from "@hookform/devtools";
 import { useCreateInvoice } from "../../../hooks/useCreateInvoice";
 import { useEditInvoice } from "../../../hooks/useEditInvoice";
-// import { useDeleteInvoice } from "../../../hooks/useDeleteInvoice";
 import { useInvoiceForm } from "../../../context/formContext";
 import { H2, H3 } from "../../../styles/sharedStyles/Typography";
 import IconClose from "../../../assets/icon-close.svg";
@@ -34,8 +34,8 @@ import { FormValues } from "./Type";
 import { defaultVAl } from "./defaultValues";
 
 function InvoiceForm() {
+  const navigate = useNavigate();
   const { createInv } = useCreateInvoice();
-  // const { deleteInv } = useDeleteInvoice();
   const [subTotal, setSubTotal] = useState(0);
   const [due, setDue] = useState("");
   const {
@@ -49,6 +49,10 @@ function InvoiceForm() {
     closeDrawer();
   }
 
+  useEffect(() => {
+    console.log(isEditSession);
+  }, [isEditSession]);
+
   const methods = useForm<FormValues>({
     defaultValues: defaultVAl,
     mode: "onChange",
@@ -58,6 +62,8 @@ function InvoiceForm() {
   const {
     register,
     handleSubmit,
+    endFormEdit,
+
     formState: { errors },
     control,
     setValue,
@@ -77,7 +83,6 @@ function InvoiceForm() {
   }, [isEditSession, formCurrentValues, reset]);
 
   function onSubmit(data: FormValues) {
-    console.log(data);
     if (isEditSession && formCurrentValues) {
       const id = formCurrentValues.id;
       editInvoice(
@@ -85,13 +90,23 @@ function InvoiceForm() {
         {
           onSuccess: () => {
             reset();
+            endFormEdit();
           },
         }
       );
     }
 
-    if (!isEditSession) createInv(data);
-    console.log("submiting...");
+    if (!isEditSession) {
+      setValue("status", "pending");
+      createInv(data, {
+        onSuccess: () => {
+          reset();
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        },
+      });
+    }
   }
 
   function onError(errors: FieldErrors<FormValues>) {
