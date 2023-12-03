@@ -2,6 +2,10 @@
 
 ## Currently under construction
 
+## Links
+
+- Solution URL: [Current version -Live URL ](https://invoice-app-challenge-nxrlidhjm-teonazav.vercel.app/)
+
 ### The challenge
 
 Users should be able to:
@@ -25,3 +29,4 @@ Users should be able to:
 - TypeScript
 - Firebase
 - Styled Components - For styles
+- Material UI (drawer, dialog)
