@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import InvoiceForm from "../invoice/form/InvoiceForm";
 import { useMediaQuery } from "react-responsive";
