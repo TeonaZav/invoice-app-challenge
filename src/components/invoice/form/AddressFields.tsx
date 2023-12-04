@@ -20,7 +20,7 @@ interface IProps {
   editValue: IAddressProps | undefined;
 }
 
-function AddressFields({ address, edit, editValue }: IProps) {
+function AddressFields({ address, editValue }: IProps) {
   const {
     state: { isEditSession },
   } = useInvoiceForm();

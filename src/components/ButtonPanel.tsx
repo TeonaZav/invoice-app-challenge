@@ -15,11 +15,10 @@ function ButtonPanel({ resetValues }: ButtonPanelProps) {
   const navigate = useNavigate();
   const { saveDraft } = useSaveDraft();
   const {
-    endFormEdit,
     state: { isEditSession },
   } = useInvoiceForm();
 
-  const { getValues, reset } = useFormContext();
+  const { getValues } = useFormContext();
   const currentValues = getValues();
   const { editDraft } = useEditDraft(currentValues.id);
 
