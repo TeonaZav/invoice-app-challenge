@@ -3,13 +3,14 @@ import styled from "styled-components";
 export const FormContainer = styled.div`
   width: 32.7rem;
   margin: 0 auto;
-  padding: 3.3rem 2.4rem 0rem, 2.4rem;
-
+  padding: 5.6rem 2.4rem 0rem, 2.4rem;
+  margin-top: 5.6rem;
   @media (min-width: 48em) {
     width: 100%;
     padding: 5.6rem 2.4rem 0rem 5.6rem;
   }
   @media (min-width: 90em) {
+    margin-top: 0;
   }
 `;
 export const AddressContainer = styled.div`
@@ -91,6 +92,7 @@ export const FormHeader = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
   height: 11rem;
   h2 {
     margin-bottom: 0;
