@@ -21,7 +21,7 @@ function InvoiceButtons() {
         <Button $btn="edit" onClick={handFormFill}>
           Edit
         </Button>
-        <DialogAlert currentId={id} />
+        <DialogAlert currentId={id} status={invoice?.status} />
       </ButtonPanelCt>
     </>
   );

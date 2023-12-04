@@ -8,15 +8,16 @@ import {
 import InvoiceProducts from "./InvoiceProducts";
 import Loader from "../UI/Loader";
 import { useInvoice } from "../../hooks/useInvoice";
+import InvoicePageHeader from "./InvoicePageHeader";
 
 function InvoiceContent() {
   const { id: paramsId } = useParams() as { id: string };
 
   const { isLoading, invoice, invoiceId } = useInvoice(paramsId);
-  // console.log(invoice);
   if (isLoading) return <Loader />;
   return (
     <>
+      <InvoicePageHeader status={invoice?.status} />
       {invoice ? (
         <Container>
           <StyledContent>

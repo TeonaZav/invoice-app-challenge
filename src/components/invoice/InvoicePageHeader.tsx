@@ -7,7 +7,7 @@ import {
   StyledHeaderPanel,
 } from "../../styles/invoicePageStyles/InvoiceHeadersStyles";
 interface InvoicePageContentProps {
-  status: string;
+  status: string | undefined;
 }
 
 function InvoicePageHeader({ status }: InvoicePageContentProps) {

@@ -6,17 +6,22 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { H2, P } from "../../styles/sharedStyles/Typography";
 import { useDeleteInvoice } from "../../hooks/useDeleteInvoice";
+import { usePaid } from "../../hooks/usePaid";
 
 interface DialogAlertProps {
   currentId: string;
+  status: string | undefined;
 }
 
-export default function DialogAlert({ currentId }: DialogAlertProps) {
+export default function DialogAlert({ currentId, status }: DialogAlertProps) {
   const navigate = useNavigate();
   const { deleteInv, isDeleting } = useDeleteInvoice();
+  const { markPaid } = usePaid(currentId);
   const [open, setOpen] = React.useState(false);
+  const [opens, setOpens] = React.useState("");
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (btnName: string) => {
+    setOpens(btnName);
     setOpen(true);
   };
 
@@ -33,12 +38,27 @@ export default function DialogAlert({ currentId }: DialogAlertProps) {
     setOpen(false);
   };
 
+  const handlePaid = () => {
+    markPaid();
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
+    setOpen(false);
+  };
   return (
     <>
-      <Button $btn="delete" onClick={handleClickOpen} disabled={isDeleting}>
+      <Button
+        $btn="delete"
+        onClick={() => handleClickOpen("delete")}
+        disabled={isDeleting}
+      >
         Delete
       </Button>
-      <Button $btn="markpaid" onClick={handleClickOpen}>
+      <Button
+        $btn="markpaid"
+        onClick={() => handleClickOpen("paid")}
+        disabled={status === "draft" || status === "paid"}
+      >
         Mark as Paid
       </Button>
       <Dialog
@@ -48,19 +68,34 @@ export default function DialogAlert({ currentId }: DialogAlertProps) {
         aria-describedby="alert-dialog-description"
       >
         <DialogContent>
-          <H2 id="alert-dialog-title">{"Confirm Deletion"}</H2>
-          <P color="pale">
-            Are you sure you want to delete invoice # {currentId}? This action
-            cannot be undone.
-          </P>
+          <H2 id="alert-dialog-title">
+            {opens === "delete" ? "Confirm Deletion" : "Mark as paid"}
+          </H2>
+          {opens === "delete" ? (
+            <P color="pale">
+              Are you sure you want to delete invoice # {currentId}? This action
+              cannot be undone.
+            </P>
+          ) : (
+            <P color="pale">
+              Mark as paid # {currentId}. This action cannot be undone.
+            </P>
+          )}
         </DialogContent>
         <DialogActions>
           <Button $btn="cancel" onClick={handleClose}>
             Cancel
           </Button>
-          <Button $btn="delete" onClick={handleDelete}>
-            Delete
-          </Button>
+          {opens === "delete" && (
+            <Button $btn="delete" onClick={handleDelete}>
+              Delete
+            </Button>
+          )}
+          {opens === "paid" && (
+            <Button $btn="markpaid" onClick={handlePaid}>
+              Confirm
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </>

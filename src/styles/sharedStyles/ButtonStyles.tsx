@@ -82,6 +82,9 @@ const Button = styled.button<{ $btn: string }>`
       &:hover {
         background-color: var(--indigo-color-pale);
       }
+      &:disabled {
+        background-color: var(--blue-grey-color1);
+      }
     `}
     ${(props) =>
     (props.$btn === "cancel" || props.$btn === "discard") &&

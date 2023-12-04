@@ -35,6 +35,12 @@ export async function updateInvoice(changedInvoice: FormValues, id: string) {
   return invoiceDoc;
 }
 
+export async function markAsPaid(id: string) {
+  const invoiceDoc = doc(db, "invoices", id);
+  await updateDoc(invoiceDoc, { status: "paid" });
+  return invoiceDoc;
+}
+
 export async function createDraft(draftData: FormValues) {
   await addDoc(invoiceCollectionRef, draftData);
 }

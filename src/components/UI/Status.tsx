@@ -4,12 +4,12 @@ import OvalGreen from "../../assets/oval-green.svg";
 import OvalDraft from "../../assets/oval-draft.svg";
 
 interface StatusProps {
-  status: string;
+  status: string | undefined;
 }
 
 function Status({ status }: StatusProps) {
   return (
-    <StyledStatus $status={status}>
+    <StyledStatus $status={status || "draft"}>
       <img
         src={
           status === "paid"
