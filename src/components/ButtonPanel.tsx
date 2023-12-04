@@ -7,10 +7,18 @@ import { useInvoiceForm } from "../context/formContext";
 import { FormValues } from "./invoice/form/Type";
 import { useNavigate } from "react-router-dom";
 
-function ButtonPanel() {
+interface ButtonPanelProps {
+  resetValues: () => void;
+}
+
+function ButtonPanel({ resetValues }: ButtonPanelProps) {
   const navigate = useNavigate();
   const { saveDraft } = useSaveDraft();
-  const { endFormEdit } = useInvoiceForm();
+  const {
+    endFormEdit,
+    state: { isEditSession },
+  } = useInvoiceForm();
+
   const { getValues, reset } = useFormContext();
   const currentValues = getValues();
   const { editDraft } = useEditDraft(currentValues.id);
@@ -26,8 +34,7 @@ function ButtonPanel() {
       const id = currentValues.id;
       editDraft({ changedDraft: { ...currentValues }, id } as Idata, {
         onSuccess: () => {
-          reset();
-          endFormEdit();
+          resetValues();
           setTimeout(() => {
             navigate("/");
           }, 2000);
@@ -36,7 +43,7 @@ function ButtonPanel() {
     } else {
       saveDraft(currentValues as FormValues, {
         onSuccess: () => {
-          reset();
+          resetValues();
           setTimeout(() => {
             navigate("/");
           }, 2000);
@@ -50,11 +57,15 @@ function ButtonPanel() {
       <Button type="button" $btn="discard">
         Discard
       </Button>
-      <Button type="button" $btn="draft" onClick={saveToDrafts}>
-        Save as Draft
-      </Button>
+      {currentValues.status === "draft" && (
+        <Button type="button" $btn="draft" onClick={saveToDrafts}>
+          {isEditSession ? "Changes draft" : "Save as Draft"}
+        </Button>
+      )}
       <Button type="submit" $btn="save">
-        Save & Send
+        {isEditSession && currentValues.status !== "draft"
+          ? "Save Changes"
+          : "Save & Send"}
       </Button>
     </ButtonPanelCt>
   );

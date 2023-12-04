@@ -16,6 +16,8 @@ function DateInput({ edit, date }: Iprops) {
   useEffect(() => {
     if (edit && date) {
       setStartDate(new Date(date));
+    } else {
+      setStartDate(new Date());
     }
   }, [date, edit]);
 

@@ -13,7 +13,7 @@ function InvoiceContent() {
   const { id: paramsId } = useParams() as { id: string };
 
   const { isLoading, invoice, invoiceId } = useInvoice(paramsId);
-  console.log(invoice);
+  // console.log(invoice);
   if (isLoading) return <Loader />;
   return (
     <>

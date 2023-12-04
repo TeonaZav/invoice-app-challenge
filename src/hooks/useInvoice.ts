@@ -10,10 +10,14 @@ export function useInvoice(id: string) {
       console.log(data);
     },
   });
-  // const invoice: IInvoice = data?.data() ? { ...data?.data(), id: data?.id } : undefined;
-  const invoiceCont: DefaultFormValuesType = { ...data?.data() };
+
   const invoiceId: string | undefined = data?.id;
-  const invoice = { id: invoiceId, ...invoiceCont };
-  console.log(invoiceId);
+
+  const invoice = data?.data()
+    ? {
+        ...(data?.data() as DefaultFormValuesType),
+        id: data?.id as string | undefined,
+      }
+    : undefined;
   return { isLoading, error, invoice, getInvoice, invoiceId };
 }

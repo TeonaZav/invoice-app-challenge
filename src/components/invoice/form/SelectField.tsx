@@ -11,20 +11,29 @@ interface IOptions {
 interface IProps {
   options: IOptions[];
   fieldName: string;
-  edit: boolean | undefined;
+  endEdit: boolean | undefined;
   editValue: number | string | undefined | null;
 }
 
-function SelectField({ options, fieldName, editValue }: IProps) {
+function SelectField({ options, fieldName, editValue, endEdit }: IProps) {
   const { register, setValue } = useFormContext();
   const [selected, setSelected] = useState<IOptions | null>(null);
 
   useEffect(() => {
-    const editOption = options?.filter(
-      (option: IOptions) => option.value == editValue
-    );
-    setSelected(editOption?.[0]);
-  }, [options, editValue]);
+    if (!endEdit && editValue) {
+      const editOption = options?.filter(
+        (option: IOptions) => option.value == editValue
+      );
+      setSelected(editOption?.[0]);
+    } else {
+      setSelected(null);
+      setValue(fieldName, "", {
+        shouldDirty: false,
+        shouldTouch: false,
+        shouldValidate: false,
+      });
+    }
+  }, [options, editValue, endEdit, fieldName, setValue]);
 
   function handleChange(selectedValue: IOptions | null) {
     if (selectedValue) {

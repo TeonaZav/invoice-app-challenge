@@ -5,6 +5,7 @@ import Input from "../../../styles/formStyles/InputStyle";
 import SelectField from "./SelectField";
 import { useQuery } from "@tanstack/react-query";
 import { getCountries } from "../../../services/apiCountries";
+import { useInvoiceForm } from "../../../context/formContext";
 
 export interface IAddressProps {
   street?: string | undefined;
@@ -20,6 +21,10 @@ interface IProps {
 }
 
 function AddressFields({ address, edit, editValue }: IProps) {
+  const {
+    state: { isEditSession },
+  } = useInvoiceForm();
+
   const {
     register,
     formState: { errors },
@@ -97,7 +102,7 @@ function AddressFields({ address, edit, editValue }: IProps) {
           <SelectField
             options={countryOptions}
             fieldName={`${address}.country`}
-            edit={edit}
+            endEdit={!isEditSession}
             editValue={editValue?.country}
           />
         </FormRow>

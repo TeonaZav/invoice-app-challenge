@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   useForm,
   FormProvider,
@@ -35,12 +35,14 @@ import { defaultVAl } from "./defaultValues";
 
 function InvoiceForm() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { createInv } = useCreateInvoice();
   const [subTotal, setSubTotal] = useState(0);
   const [due, setDue] = useState("");
   const {
     state: { default: formCurrentValues, isEditSession },
     closeDrawer,
+    endFormEdit,
   } = useInvoiceForm();
 
   const { editInvoice } = useEditInvoice(formCurrentValues?.id);
@@ -62,14 +64,36 @@ function InvoiceForm() {
   const {
     register,
     handleSubmit,
-    endFormEdit,
-
     formState: { errors },
     control,
     setValue,
     watch,
     reset,
+    getValues,
   } = methods;
+
+  function resetValues() {
+    if (isEditSession) {
+      endFormEdit();
+    }
+    reset(defaultVAl);
+    setValue("paymentDue", "");
+    setValue("items", [
+      {
+        id: "",
+        name: "",
+        quantity: 1,
+        price: 0,
+        total: 0,
+      },
+    ]);
+  }
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      resetValues();
+    }
+  }, [location]);
 
   const { fields, append, remove } = useFieldArray({
     name: "items",
@@ -89,8 +113,7 @@ function InvoiceForm() {
         { changedData: { ...data }, id },
         {
           onSuccess: () => {
-            reset();
-            endFormEdit();
+            resetValues();
           },
         }
       );
@@ -100,7 +123,7 @@ function InvoiceForm() {
       setValue("status", "pending");
       createInv(data, {
         onSuccess: () => {
-          reset();
+          resetValues();
           setTimeout(() => {
             navigate("/");
           }, 2000);
@@ -123,8 +146,11 @@ function InvoiceForm() {
         date.setDate(date.getDate() + terms);
         setDue(date.toLocaleString());
       }
+
       const items = values.items;
+
       let total = 0;
+
       if (items && items?.length > 0) {
         for (const item of items) {
           if (item?.total) {
@@ -140,119 +166,114 @@ function InvoiceForm() {
     return () => subscription.unsubscribe();
   }, [watch, setValue, subTotal, due]);
 
+  console.log(getValues());
   return (
-    <>
-      <FormContainer>
-        <DevTool control={control} />
-        <FormHeader>
-          {isEditSession ? (
-            <H2 color="dark">
-              <span className="pale">#</span>
-              {formCurrentValues?.id}
-            </H2>
-          ) : (
-            <H2 color="dark">New Invoice</H2>
-          )}
-          <img src={IconClose} onClick={handleDrawer} />
-        </FormHeader>
+    <FormContainer>
+      <DevTool control={control} />
+      <FormHeader>
+        {isEditSession ? (
+          <H2 color="dark">
+            Edit<span className="pale">#</span>
+            {formCurrentValues?.id}
+          </H2>
+        ) : (
+          <H2 color="dark">New Invoice</H2>
+        )}
+        <img src={IconClose} onClick={handleDrawer} />
+      </FormHeader>
 
-        <FormProvider {...methods}>
-          <Form onSubmit={handleSubmit(onSubmit, onError)}>
-            <H3 color="indigo">Bill From</H3>
-            <AddressFields
-              address={"senderAddress"}
-              edit={isEditSession}
-              editValue={formCurrentValues?.senderAddress}
+      <FormProvider {...methods}>
+        <Form onSubmit={handleSubmit(onSubmit, onError)}>
+          <H3 color="indigo">Bill From</H3>
+          <AddressFields
+            address={"senderAddress"}
+            edit={isEditSession}
+            editValue={formCurrentValues?.senderAddress}
+          />
+          <H3 color="indigo">Bill To</H3>
+          <FormRow
+            label="Client’s Name"
+            error={errors?.clientName?.message?.toString()}
+            $boxtype="primary"
+          >
+            <Input type="text" id="clientName" {...register("clientName")} />
+          </FormRow>
+          <FormRow
+            label="Client’s Email"
+            error={errors?.clientEmail?.message?.toString()}
+            $boxtype="primary"
+          >
+            <Input type="text" id="clientEmail" {...register("clientEmail")} />
+          </FormRow>
+          <AddressFields
+            address={"clientAddress"}
+            edit={isEditSession}
+            editValue={formCurrentValues?.clientAddress}
+          />
+
+          <DateDescriptionWrap>
+            <DateInput
+              edit={isEditSession || false}
+              date={formCurrentValues?.createdAt}
             />
-            <H3 color="indigo">Bill To</H3>
             <FormRow
-              label="Client’s Name"
-              error={errors?.clientName?.message?.toString()}
-              $boxtype="primary"
+              label="Payment Terms"
+              error={errors?.paymentTerms?.message?.toString()}
+              $boxtype="secondary"
             >
-              <Input type="text" id="clientName" {...register("clientName")} />
+              <SelectField
+                options={paymentOptions}
+                fieldName={"paymentTerms"}
+                endEdit={!isEditSession}
+                editValue={formCurrentValues?.paymentTerms}
+              />
             </FormRow>
+
             <FormRow
-              label="Client’s Email"
-              error={errors?.clientEmail?.message?.toString()}
+              label="Project Description"
+              error={errors?.description?.message?.toString()}
               $boxtype="primary"
             >
               <Input
                 type="text"
-                id="clientEmail"
-                {...register("clientEmail")}
+                id="description"
+                {...register("description")}
               />
             </FormRow>
-            <AddressFields
-              address={"clientAddress"}
-              edit={isEditSession}
-              editValue={formCurrentValues?.clientAddress}
-            />
-
-            <DateDescriptionWrap>
-              <DateInput
-                edit={isEditSession || false}
-                date={formCurrentValues?.createdAt}
-              />
-              <FormRow
-                label="Payment Terms"
-                error={errors?.paymentTerms?.message?.toString()}
-                $boxtype="secondary"
-              >
-                <SelectField
-                  options={paymentOptions}
-                  fieldName={"paymentTerms"}
-                  edit={isEditSession}
-                  editValue={formCurrentValues?.paymentTerms}
+          </DateDescriptionWrap>
+          <H3 color="grey">Item List</H3>
+          <ItemsCt>
+            {fields.map((field, index) => {
+              return (
+                <InvoiceItem
+                  key={field.id}
+                  remove={remove}
+                  fieldId={field.id}
+                  index={index}
                 />
-              </FormRow>
-
-              <FormRow
-                label="Project Description"
-                error={errors?.description?.message?.toString()}
-                $boxtype="primary"
-              >
-                <Input
-                  type="text"
-                  id="description"
-                  {...register("description")}
-                />
-              </FormRow>
-            </DateDescriptionWrap>
-            <H3 color="grey">Item List</H3>
-            <ItemsCt>
-              {fields.map((field, index) => {
-                return (
-                  <InvoiceItem
-                    key={field.id}
-                    remove={remove}
-                    fieldId={field.id}
-                    index={index}
-                  />
-                );
-              })}
-              <Button
-                type="button"
-                $btn="newproduct"
-                onClick={() =>
-                  append({
-                    id: "",
-                    name: "",
-                    quantity: 1,
-                    price: 0,
-                    total: 0,
-                  })
-                }
-              >
-                + Add New Item
-              </Button>
-            </ItemsCt>
-            <p>{subTotal}</p>
-            <ButtonPanel />
-          </Form>
-        </FormProvider>
-      </FormContainer>
-    </>
+              );
+            })}
+            <Button
+              type="button"
+              $btn="newproduct"
+              onClick={() =>
+                append({
+                  id: "",
+                  name: "",
+                  quantity: 1,
+                  price: 0,
+                  total: 0,
+                })
+              }
+            >
+              + Add New Item
+            </Button>
+          </ItemsCt>
+          <p>{subTotal}</p>
+          <ButtonPanel resetValues={resetValues} />
+        </Form>
+      </FormProvider>
+    </FormContainer>
   );
 }
 export default InvoiceForm;
