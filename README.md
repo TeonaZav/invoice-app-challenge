@@ -4,7 +4,7 @@
 
 ## Links
 
-- Solution URL: [Current version -Live URL ](https://invoice-app-challenge-nxrlidhjm-teonazav.vercel.app/)
+- Solution URL: [Current version -Live URL ](https://invoice-app-challenge-kappa.vercel.app/)
 
 ### The challenge
 
