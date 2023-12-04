@@ -50,6 +50,12 @@ const reducer = (state: StateType, action: ReducerAction): StateType => {
         drawerIsOpen: false,
         isEditSession: false,
       };
+    case REDUCER_ACTION_TYPE.RESET_FORM:
+      return {
+        ...state,
+        drawerIsOpen: false,
+        isEditSession: false,
+      };
     default:
       return state;
   }
@@ -78,6 +84,11 @@ const useInvoiceContextForm = (initialState: StateType) => {
     []
   );
 
+  const resetForm = useCallback(
+    () => dispatch({ type: REDUCER_ACTION_TYPE.RESET_FORM }),
+    []
+  );
+
   const fillFormForEdit = useCallback(
     (invoice: DefaultFormValuesType | undefined) => {
       dispatch({
@@ -95,6 +106,7 @@ const useInvoiceContextForm = (initialState: StateType) => {
     openDrawer,
     drawerToggle,
     endFormEdit,
+    resetForm,
   };
 };
 
@@ -106,6 +118,7 @@ const initContextState: UseInvoiceContextFormType = {
   openDrawer: () => {},
   drawerToggle: () => {},
   endFormEdit: () => {},
+  resetForm: () => {},
   fillFormForEdit: () => {},
 };
 
@@ -132,6 +145,7 @@ type UseInvoiceFormHookType = {
   openDrawer: () => void;
   drawerToggle: () => void;
   endFormEdit: () => void;
+  resetForm: () => void;
   fillFormForEdit: (invoice: DefaultFormValuesType | undefined) => void;
 };
 
@@ -142,6 +156,7 @@ export const useInvoiceForm = (): UseInvoiceFormHookType => {
     openDrawer,
     drawerToggle,
     endFormEdit,
+    resetForm,
     fillFormForEdit,
   } = useContext(InvoiceFormContext);
   return {
@@ -150,6 +165,7 @@ export const useInvoiceForm = (): UseInvoiceFormHookType => {
     openDrawer,
     drawerToggle,
     endFormEdit,
+    resetForm,
     fillFormForEdit,
   };
 };

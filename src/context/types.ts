@@ -41,6 +41,7 @@ export const enum REDUCER_ACTION_TYPE {
   OPEN_DRAWER,
   TOGGLE_DRAWER,
   END_EDIT,
+  RESET_FORM,
 }
 
 export type ReducerAction = {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Select from "react-select";
 import SelectStyle from "../../../styles/formStyles/SelectStyle";
@@ -11,29 +11,18 @@ interface IOptions {
 interface IProps {
   options: IOptions[];
   fieldName: string;
-  endEdit: boolean | undefined;
-  editValue: number | string | undefined | null;
 }
 
-function SelectField({ options, fieldName, editValue, endEdit }: IProps) {
-  const { register, setValue } = useFormContext();
-  const [selected, setSelected] = useState<IOptions | null>(null);
+function SelectField({ options, fieldName }: IProps) {
+  const { register, setValue, watch } = useFormContext();
+  const watchValue =
+    fieldName !== "paymentTerms" ? watch(fieldName) : watch("paymentTerms");
 
-  useEffect(() => {
-    if (!endEdit && editValue) {
-      const editOption = options?.filter(
-        (option: IOptions) => option.value == editValue
-      );
-      setSelected(editOption?.[0]);
-    } else {
-      setSelected(null);
-      setValue(fieldName, "", {
-        shouldDirty: false,
-        shouldTouch: false,
-        shouldValidate: false,
-      });
-    }
-  }, [options, editValue, endEdit, fieldName, setValue]);
+  const editOption = options?.filter(
+    (option: IOptions) => option.value == watchValue
+  );
+
+  const [selected, setSelected] = useState<IOptions | null>(null);
 
   function handleChange(selectedValue: IOptions | null) {
     if (selectedValue) {
@@ -50,7 +39,7 @@ function SelectField({ options, fieldName, editValue, endEdit }: IProps) {
     <SelectStyle className="react-select">
       <Select
         id={fieldName}
-        value={selected}
+        value={editOption ? editOption : selected}
         {...register(fieldName)}
         onChange={handleChange}
         options={options}

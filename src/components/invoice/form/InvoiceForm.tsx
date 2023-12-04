@@ -77,28 +77,22 @@ function InvoiceForm() {
       endFormEdit();
     }
     reset(defaultVAl);
+    setValue("createdAt", "");
     setValue("paymentDue", "");
-    setValue("items", [
-      {
-        id: "",
-        name: "",
-        quantity: 1,
-        price: 0,
-        total: 0,
-      },
-    ]);
   }
 
   useEffect(() => {
-    if (location.pathname === "/") {
+    if (isEditSession && location.pathname === "/") {
       resetValues();
     }
-  }, [location]);
+  }, [location, isEditSession]);
 
   const { fields, append, remove } = useFieldArray({
     name: "items",
     control,
   });
+
+  console.log(getValues());
 
   useEffect(() => {
     if (isEditSession && formCurrentValues) {
@@ -125,6 +119,7 @@ function InvoiceForm() {
         onSuccess: () => {
           resetValues();
           setTimeout(() => {
+            closeDrawer();
             navigate("/");
           }, 2000);
         },
@@ -166,7 +161,6 @@ function InvoiceForm() {
     return () => subscription.unsubscribe();
   }, [watch, setValue, subTotal, due]);
 
-  console.log(getValues());
   return (
     <FormContainer>
       <DevTool control={control} />
@@ -185,11 +179,7 @@ function InvoiceForm() {
       <FormProvider {...methods}>
         <Form onSubmit={handleSubmit(onSubmit, onError)}>
           <H3 color="indigo">Bill From</H3>
-          <AddressFields
-            address={"senderAddress"}
-            edit={isEditSession}
-            editValue={formCurrentValues?.senderAddress}
-          />
+          <AddressFields address={"senderAddress"} />
           <H3 color="indigo">Bill To</H3>
           <FormRow
             label="Client’s Name"
@@ -205,17 +195,10 @@ function InvoiceForm() {
           >
             <Input type="text" id="clientEmail" {...register("clientEmail")} />
           </FormRow>
-          <AddressFields
-            address={"clientAddress"}
-            edit={isEditSession}
-            editValue={formCurrentValues?.clientAddress}
-          />
+          <AddressFields address={"clientAddress"} />
 
           <DateDescriptionWrap>
-            <DateInput
-              edit={isEditSession || false}
-              date={formCurrentValues?.createdAt}
-            />
+            <DateInput />
             <FormRow
               label="Payment Terms"
               error={errors?.paymentTerms?.message?.toString()}
@@ -224,8 +207,6 @@ function InvoiceForm() {
               <SelectField
                 options={paymentOptions}
                 fieldName={"paymentTerms"}
-                endEdit={!isEditSession}
-                editValue={formCurrentValues?.paymentTerms}
               />
             </FormRow>
 
