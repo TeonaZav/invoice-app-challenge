@@ -1,5 +1,5 @@
-import { useState } from "react";
 import Select, { components, OptionProps } from "react-select";
+import { useInvoiceListFilter } from "../../../context/listContext";
 
 interface IProps extends OptionProps<{ value: string; label: string }> {}
 
@@ -42,8 +42,9 @@ const filterOptions = [
   { value: "pending", label: "Pending" },
   { value: "draft", label: "Draft" },
 ];
+
 export default function FilterList() {
-  const [selectedOptions, setSelectedOptions] = useState<string[] | null>([]);
+  const { filterOption, clearFilter } = useInvoiceListFilter();
 
   return (
     <>
@@ -51,9 +52,12 @@ export default function FilterList() {
         isMulti
         closeMenuOnSelect={false}
         hideSelectedOptions={false}
+        isClearable={true}
         onChange={(options) => {
           if (options.length > 0) {
-            setSelectedOptions(options.map((opt) => opt.value));
+            filterOption(options.map((opt) => opt.value));
+          } else {
+            clearFilter();
           }
         }}
         options={filterOptions}
@@ -67,11 +71,6 @@ export default function FilterList() {
           }),
         }}
       />
-      <p>
-        {selectedOptions?.map((value) => {
-          return value;
-        })}
-      </p>
     </>
   );
 }
