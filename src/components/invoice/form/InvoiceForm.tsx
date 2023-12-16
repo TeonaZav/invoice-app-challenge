@@ -10,7 +10,7 @@ import { DevTool } from "@hookform/devtools";
 import { useCreateInvoice } from "../../../hooks/useCreateInvoice";
 import { useEditInvoice } from "../../../hooks/useEditInvoice";
 import { useInvoiceForm } from "../../../context/formContext";
-import { H2, H3 } from "../../../styles/sharedStyles/Typography";
+import { H1, H2, H3 } from "../../../styles/sharedStyles/Typography";
 import IconClose from "../../../assets/icon-close.svg";
 import {
   Form,
@@ -166,12 +166,12 @@ function InvoiceForm() {
       <DevTool control={control} />
       <FormHeader>
         {isEditSession ? (
-          <H2 color="dark">
-            Edit<span className="pale">#</span>
+          <H1>
+            Edit <span className="pale">#</span>
             {formCurrentValues?.id}
-          </H2>
+          </H1>
         ) : (
-          <H2 color="dark">New Invoice</H2>
+          <H1 color="dark">New Invoice</H1>
         )}
         <img src={IconClose} onClick={handleDrawer} />
       </FormHeader>

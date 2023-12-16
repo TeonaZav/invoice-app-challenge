@@ -45,6 +45,17 @@ function SelectField({ options, fieldName }: IProps) {
         options={options}
         className="react-select-container"
         classNamePrefix="react-select"
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: 0,
+          colors: {
+            ...theme.colors,
+            primary25: "var(--indigo-color-pale)",
+            neutral50: "var(--bold-color)",
+            neutral80: "var(--bold-color)",
+            primary: "var(--indigo-color-pale)",
+          },
+        })}
       />
     </SelectStyle>
   );

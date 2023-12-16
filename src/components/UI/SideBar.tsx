@@ -24,8 +24,9 @@ export default function SideBar() {
     <Box
       sx={{
         width: isDes ? 719 : isTablet ? 616 : "100vw",
-        marginLeft: isDes ? "12rem" : 0,
+        marginLeft: isDes ? "10rem" : 0,
         position: "relative",
+        backgroundColor: "var(--drawer-bg)",
       }}
       role="presentation"
     >

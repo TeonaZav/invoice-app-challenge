@@ -24,9 +24,8 @@ input:-webkit-autofill:active {
   transition: background-color 1000s;
   -webkit-text-fill-color: var(--main-bg-color) !important;
 }
+ 
 :root {
-  --main-bg-color: #f8f8fb;
-  --card-color: #ffffff;
   --indigo-color: #7c5dfa;
   --indigo-color-pale: #9277ff;
   --blue-black-color1: #0c0e16;
@@ -47,6 +46,39 @@ input:-webkit-autofill:active {
   --pale-orange: rgba(231, 198, 154, 0.200);
   --color-green: #33D69F;
   --pale-green: #88ceb723;
+  
+  & .light-mode{
+    --main-bg-color: #f8f8fb;
+    --card-color: #ffffff;
+    --card-color-2: #ffffff;
+    --bold-color: #0c0e16;
+    --main-text-color: #888eb0;
+    --subtotal-bg:#373B53;
+    --product-bg: #F9FAFE;
+    --drawer-bg: #ffffff;
+    --input-border: #dfe3fa;
+    --border-2:#dfe3fa;
+    --scroll-color-1:rgba(0, 0, 0, 0.123);
+    --scroll-color-2:#ffffff;
+    --add-item-color:  #F9FAFE;
+    --add-item-hover:#dfe3fa;
+  }
+  & .dark-mode{
+    --main-bg-color: #0c0e16;
+    --card-color: #1e2139;
+    --card-color-2: #252945;
+    --bold-color: #ffffff;
+    --main-text-color: #dfe3fa;
+    --subtotal-bg:#0c0e16;
+    --product-bg: #252945;
+    --drawer-bg: #141625;
+    --input-border: #252945;
+    --border-2:#1E2139;
+    --scroll-color-1:#373B53;
+    --scroll-color-2:#1E2139;
+    --add-item-color:  #252945;
+    --add-item-hover:#373B53;
+  }
 }
 body {
   margin: 0 auto;
@@ -59,18 +91,20 @@ body {
 }
 /* custom scrollbar */
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.123);
+  -webkit-box-shadow: inset 0 0 6px var(--scroll-color-1);
   border-radius: 1rem;
-  background-color: rgba(0, 0, 0, 0.123);
+  background-color: var(--scroll-color-1);
+
 }
 ::-webkit-scrollbar {
   width: 1rem;
-  background-color: rgba(0, 0, 0, 0.123);
+  background-color: var(--scroll-color-1);
+
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 1rem;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.116);
-  background-color: white;
+  background-color: var(--scroll-color-2);
 }
 
 
@@ -95,8 +129,6 @@ body {
 .displayNone{
   display:none
 }
-@media (min-width: 90em) {
 
-}
 `;
 export default GlobalStyles;

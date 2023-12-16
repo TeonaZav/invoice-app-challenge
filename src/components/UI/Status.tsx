@@ -50,7 +50,7 @@ const StyledStatus = styled.div<{ $status: string }>`
     props.$status === "draft" &&
     css`
       color: var(--dark-blue-color);
-      background-color: var(--main-bg-color);
+      background-color: #f8f8fb;
     `}
 
   @media (min-width: 48em) {

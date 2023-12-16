@@ -3,6 +3,8 @@ import Button from "../../../styles/sharedStyles/ButtonStyles";
 import { StyledListHeader } from "../../../styles/invoiceListStyles/StyledInvoiceList";
 import FilterList from "./FilterList";
 import { useInvoiceForm } from "../../../context/formContext";
+import { H1, P } from "../../../styles/sharedStyles/Typography";
+import { useMediaQuery } from "react-responsive";
 
 interface InvoiceListHeaderProps {
   itemCount: number;
@@ -13,11 +15,14 @@ function InvoiceListHeader({ itemCount }: InvoiceListHeaderProps) {
   function handleDrawer() {
     drawerToggle();
   }
+
+  const isDes = useMediaQuery({ query: "(min-width: 90em)" });
+
   return (
     <StyledListHeader>
       <div>
-        <h1>Invoices</h1>
-        <p>{itemCount} invoices</p>
+        <H1>Invoices</H1>
+        <P color="pale">{itemCount} invoices</P>
       </div>
 
       <div className="ct-right">
@@ -28,7 +33,7 @@ function InvoiceListHeader({ itemCount }: InvoiceListHeaderProps) {
               <div className="add">
                 <img src={IconPlus} />
               </div>
-              <span>New</span>
+              <span>{isDes ? "New Invoice" : "New"}</span>
             </>
           }
         </Button>

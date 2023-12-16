@@ -4,18 +4,18 @@ export const P = styled.p<{ color: string }>`
   ${(props) =>
     props.color === "pale" &&
     css`
-      color: var(--blue-grey-color1);
-      font-weight: 500;
+      color: var(--main-text-color);
+      font-weight: 400;
       font-size: 1.3rem;
-      line-height: 1.8rem;
+      line-height: 2rem;
     `}
   ${(props) =>
     props.color === "bold" &&
     css`
-      color: var(--blue-black-color1);
-      font-weight: 700;
+      color: var(--bold-color);
+      font-weight: 500;
       font-size: 1.5rem;
-      line-height: 1.5rem;
+      line-height: 2rem;
     `}
     ${(props) =>
     props.color === "paid" &&
@@ -39,12 +39,22 @@ export const P = styled.p<{ color: string }>`
       font-size: 1.5rem;
     `}
 `;
-
-export const H2 = styled.h3`
+export const H1 = styled.h1`
   font-size: 2.4rem;
-
   font-weight: 700;
-  line-height: 32px; /* 133.333% */
+  line-height: 32px;
+  letter-spacing: -0.5px;
+  color: var(--bold-color);
+  & span {
+    font-size: 2.4rem;
+    font-weight: 700;
+  }
+`;
+
+export const H2 = styled.h2`
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 32px;
   letter-spacing: -0.5px;
   ${(props) =>
     props.color === "dark" &&

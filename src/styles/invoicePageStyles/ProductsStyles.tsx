@@ -1,13 +1,15 @@
 import styled, { css } from "styled-components";
 
 export const Products = styled.section`
-  background-color: var(--light-blue-color2);
+  color: var(--main-text-color);
+  background-color: var(--product-bg);
   width: 100%;
   border-radius: 8px 8px 0px 0px;
 `;
 
 export const PoductsList = styled.table`
-  background-color: var(--light-blue-color2);
+  color: var(--main-text-color);
+  background-color: var(--product-bg);
   width: 100%;
   border-radius: 8px 8px 0px 0px;
   width: 100%;
@@ -29,6 +31,10 @@ export const TH = styled.th<{ $justify: string }>`
     `}
 `;
 export const TD = styled.td<{ $justify: string }>`
+  color: var(--main-text-color);
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 2rem;
   ${(props) =>
     props.$justify === "left" &&
     css`
@@ -43,7 +49,8 @@ export const TD = styled.td<{ $justify: string }>`
     `}
 `;
 export const PoductsListMobile = styled.div`
-  background-color: var(--light-blue-color2);
+  color: var(--main-text-color);
+  background-color: var(--product-bg);
   width: 100%;
   border-radius: 8px 8px 0px 0px;
 
@@ -61,14 +68,14 @@ export const PoductsListMobile = styled.div`
 export const Subtotal = styled.div`
   width: 100%;
   height: 8rem;
-  background-color: var(--header-bg-color);
+  background-color: var(--subtotal-bg);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 2.4rem;
 
   .subtotal {
-    color: var(--card-color);
+    color: var(--light-blue-color);
     font-weight: 700;
     font-size: 2rem;
   }

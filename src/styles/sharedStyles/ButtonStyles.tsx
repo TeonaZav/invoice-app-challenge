@@ -31,9 +31,15 @@ const Button = styled.button<{ $btn: string }>`
         align-items: center;
         width: 3.2rem;
         height: 3.2rem;
-        background-color: var(--card-color);
+        background-color: #ffffff;
         border-radius: 100%;
       }
+    `}
+
+  ${(props) =>
+    props.$btn === "btnTheme" &&
+    css`
+      background: none;
     `}
 
   ${(props) =>
@@ -41,14 +47,14 @@ const Button = styled.button<{ $btn: string }>`
     css`
       width: 100%;
       justify-content: center;
-      background-color: var(--light-blue-color2);
+      background-color: var(--add-item-color);
       color: var(--blue-grey-color2);
       &:hover {
-        background-color: var(--light-blue-color);
+        background-color: var(--add-item-hover);
       }
     `}
 
-    ${(props) =>
+  ${(props) =>
     props.$btn === "edit" &&
     css`
       width: 7.3rem;
@@ -65,7 +71,7 @@ const Button = styled.button<{ $btn: string }>`
       width: 8.9rem;
       justify-content: center;
       background-color: var(--red-color);
-      color: var(--card-color);
+      color: #ffffff;
       &:hover {
         background-color: var(--red-pale);
       }
@@ -78,7 +84,7 @@ const Button = styled.button<{ $btn: string }>`
       width: 13.8rem;
       justify-content: center;
       background-color: var(--indigo-color);
-      color: var(--card-color);
+      color: #ffffff;
       &:hover {
         background-color: var(--indigo-color-pale);
       }
@@ -118,13 +124,12 @@ const Button = styled.button<{ $btn: string }>`
       font-size: 1.5rem;
       font-weight: 700;
       background-color: transparent;
-      color: var(--blue-black-color2);
-
+      color: var(--bold-color);
       img {
         width: 1rem;
       }
       &:hover {
-        background-color: var(--light-blue-color);
+        background-color: var(--add-item-hover);
       }
     `}
 `;

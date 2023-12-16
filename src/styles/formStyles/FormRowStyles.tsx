@@ -65,7 +65,7 @@ export const Error = styled.span`
 export const Label = styled.label`
   font-size: 1.3rem;
   font-weight: 500;
-  color: var(--blue-grey-color2);
+  color: var(--main-text-color);
   line-height: 1.5rem;
   ${(props) =>
     props.color === "error" &&

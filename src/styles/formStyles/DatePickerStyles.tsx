@@ -6,12 +6,16 @@ export const DatePickerStyles = styled.div<{ $boxtype: string }>`
   gap: 0.9rem;
   box-sizing: border-box;
   flex-grow: 1;
+  color: var(--bold-color);
 
   .react-datepicker {
     height: 24.3rem;
+    background-color: var(--card-color-2);
     padding: 1.2rem;
     border-radius: 0.8rem;
-    box-shadow: 0px 10px 20px 0px rgba(72, 84, 159, 0.25);
+
+    /* box-shadow: 0px 10px 20px 0px rgba(72, 84, 159, 0.25); */
+    box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.25);
     border: none !important;
     margin: 0 auto;
     &__input-container {
@@ -20,7 +24,8 @@ export const DatePickerStyles = styled.div<{ $boxtype: string }>`
     }
 
     &__input-container input {
-      border: 1px solid var(--light-blue-color);
+      color: var(--bold-color);
+      border: 1px solid var(--input-border);
       background-color: var(--card-color);
       border-radius: 0.4rem;
       height: 4.8rem;
@@ -33,15 +38,21 @@ export const DatePickerStyles = styled.div<{ $boxtype: string }>`
     }
 
     &__header {
-      background: white !important;
+      background-color: var(--card-color-2);
       border-bottom: none;
+    }
+    .react-datepicker__day {
+      color: var(--main-text-color);
+    }
+    .react-datepicker__day--disabled {
+      color: var(--blue-grey-color1);
     }
     .react-datepicker__day--outside-month {
       color: var(--red-pale) !important;
       pointer-events: none;
     }
     &__current-month {
-      color: var(--blue-black-color1);
+      color: var(--bold-color);
       font-size: 1.5rem;
       line-height: 1.5rem;
       font-weight: 700;
@@ -56,6 +67,7 @@ export const DatePickerStyles = styled.div<{ $boxtype: string }>`
     &__day,
     &__time-name {
       width: 2.5rem;
+      color: var(--main-text-color);
     }
     &__day,
     &__month-text,
@@ -121,11 +133,18 @@ export const DatePickerStyles = styled.div<{ $boxtype: string }>`
 
   .react-datepicker-popper .react-datepicker__navigation {
     color: var(--indigo-color-pale) !important;
+    background-color: var(--card-color-2);
   }
-
+  .react-datepicker__navigation-icon--next {
+    fill: var(--indigo-color-pale);
+  }
   .react-datepicker__day.react-datepicker__day--today {
     border-radius: 7px;
     color: var(--indigo-color) !important;
     font-weight: 700;
+  }
+
+  .react-datepicker__navigation-icon::before {
+    border-color: var(--indigo-color);
   }
 `;

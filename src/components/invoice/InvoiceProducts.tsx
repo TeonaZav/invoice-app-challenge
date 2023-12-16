@@ -9,6 +9,7 @@ import {
   PoductsListMobile,
   Subtotal,
 } from "../../styles/invoicePageStyles/ProductsStyles";
+
 interface IProductsProps {
   items:
     | {
@@ -51,16 +52,12 @@ function InvoiceProducts({ items, subtotal }: IProductsProps) {
               items.map((row, index) => {
                 return (
                   <tr key={index}>
-                    <TD className="bold" $justify="left">
-                      {row.name}
-                    </TD>
-                    <TD className="pale" $justify="left">
-                      {row.quantity}
-                    </TD>
-                    <TD className="pale" $justify="right">
+                    <TD $justify="left">{row.name}</TD>
+                    <TD $justify="left">{row.quantity}</TD>
+                    <TD $justify="right">
                       {row.price && currencyFormat(row.price)}
                     </TD>
-                    <TD className="bold" $justify="right">
+                    <TD $justify="right">
                       {row.total && currencyFormat(row.total)}
                     </TD>
                   </tr>

@@ -5,14 +5,13 @@ const SelectStyle = styled.div`
   height: 4.8rem;
   border-radius: 0.4rem;
   -webkit-box-shadow: none;
-
   .react-select__control {
     width: 100%;
     border-radius: 0.4rem;
     height: 4.8rem;
-    border: 1px solid var(--light-blue-color);
+    border: 1px solid var(--input-border);
+    background-color: var(--card-color-2);
     cursor: pointer;
-    color: var(--blue-black-color1);
     font-size: 1.5rem;
     line-height: 1.5rem;
     letter-spacing: -0.25px;
@@ -24,12 +23,19 @@ const SelectStyle = styled.div`
       -webkit-box-shadow: none;
     }
   }
-  .react-select__indicators {
+
+  .react-select__indicator-separator {
+    display: none;
+  }
+  .react-select__dropdown-indicator {
     border: none;
-    fill: red;
+  }
+  .react-select__dropdown-indicator svg {
+    fill: var(--indigo-color);
   }
   .react-select__menu {
-    color: var(--blue-black-color1);
+    color: var(--main-text-color);
+    background-color: var(--card-color-2);
     font-weight: 700;
   }
   .react-select__menu-list {
@@ -37,7 +43,7 @@ const SelectStyle = styled.div`
   }
   .react-select__option {
     padding: 1.5rem;
-    border-bottom: 1px solid var(--light-blue-color);
+    border-bottom: 1px solid var(--border-2);
     &:hover {
       color: var(--indigo-color);
       background-color: var(--card-color);

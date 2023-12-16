@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 export const Container = styled.div`
   width: 32.7rem;
   padding: 0 2.4rem;
-  background-color: #ffffff;
+  background-color: var(--card-color);
   border-radius: 0.8rem;
   box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.1);
   @media (min-width: 48em) {
@@ -20,7 +20,7 @@ export const ButtonPanelCt = styled.div<{ $ct: string }>`
   left: 50%;
   transform: translate(-50%, 0);
   background-color: var(--card-color);
-  box-shadow: rgba(72, 84, 159, 0.212) 0px -7px 40px -7px;
+
   gap: 1rem;
   width: 100%;
   display: flex;
@@ -36,6 +36,8 @@ export const ButtonPanelCt = styled.div<{ $ct: string }>`
       padding: 3.3rem 2.4rem 8.8rem, 2.4rem;
       @media (min-width: 48em) {
         justify-content: space-between;
+        background-color: var(--drawer-bg);
+        box-shadow: rgba(72, 84, 159, 0.212) 0px -7px 40px -7px;
       }
     `}
   ${(props) =>
