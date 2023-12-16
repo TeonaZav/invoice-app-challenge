@@ -10,7 +10,7 @@ import { DevTool } from "@hookform/devtools";
 import { useCreateInvoice } from "../../../hooks/useCreateInvoice";
 import { useEditInvoice } from "../../../hooks/useEditInvoice";
 import { useInvoiceForm } from "../../../context/formContext";
-import { H1, H2, H3 } from "../../../styles/sharedStyles/Typography";
+import { H1, H3 } from "../../../styles/sharedStyles/Typography";
 import IconClose from "../../../assets/icon-close.svg";
 import {
   Form,
